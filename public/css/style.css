@@ -11,6 +11,7 @@ body {
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
+    transition: background 1.5s ease-in-out;
 }
 
 body::before {
