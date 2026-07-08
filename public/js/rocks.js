@@ -159,6 +159,170 @@
     rocks.appendChild(waveLine2);
     document.body.appendChild(rocks);
     
+    const fishContainer = document.createElement('div');
+    fishContainer.id = 'fish-container';
+    fishContainer.style.cssText = `
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    `;
+    document.body.appendChild(fishContainer);
+    
+    function createFish() {
+        const fish = document.createElement('div');
+        const startX = 10 + Math.random() * 80;
+        const size = 20 + Math.random() * 30;
+        const jumpHeight = 150 + Math.random() * 200;
+        const duration = 1.5 + Math.random() * 1;
+        const delay = Math.random() * 0.5;
+        
+        const fishColors = [
+            { body: '#4a90d9', fin: '#3a7bc8', accent: '#6ab0e9' },
+            { body: '#e89b3c', fin: '#d68a2b', accent: '#f0b04a' },
+            { body: '#5cb85c', fin: '#4cae4c', accent: '#7ed07e' },
+            { body: '#c0c0c0', fin: '#a8a8a8', accent: '#d8d8d8' },
+            { body: '#e85d75', fin: '#d84d65', accent: '#f07d95' }
+        ];
+        
+        const color = fishColors[Math.floor(Math.random() * fishColors.length)];
+        
+        fish.style.cssText = `
+            position: absolute;
+            bottom: -${size}px;
+            left: ${startX}%;
+            width: ${size}px;
+            height: ${size * 0.6}px;
+            opacity: 0;
+            z-index: 2;
+        `;
+        
+        fish.innerHTML = `
+            <svg width="${size}" height="${size * 0.6}" viewBox="0 0 60 36">
+                <!-- Corpo del pesce -->
+                <ellipse cx="28" cy="18" rx="22" ry="14" fill="${color.body}"/>
+                
+                <!-- Coda -->
+                <path d="M48 18 L58 8 L58 28 Z" fill="${color.fin}"/>
+                
+                <!-- Pinna dorsale -->
+                <path d="M25 6 Q30 0 35 6 L35 12 Q30 8 25 12 Z" fill="${color.fin}" opacity="0.9"/>
+                
+                <!-- Pinna inferiore -->
+                <path d="M22 30 Q28 36 34 30 L34 24 Q28 28 22 24 Z" fill="${color.fin}" opacity="0.9"/>
+                
+                <!-- Occhio -->
+                <circle cx="16" cy="14" r="4" fill="white"/>
+                <circle cx="17" cy="14" r="2.5" fill="black"/>
+                <circle cx="18" cy="13" r="1" fill="white"/>
+                
+                <!-- Branchie -->
+                <path d="M24 16 Q22 18 24 20" stroke="${color.accent}" stroke-width="1.5" fill="none" opacity="0.6"/>
+                
+                <!-- Scaglie decorative -->
+                <path d="M20 12 Q28 10 36 12" stroke="${color.accent}" stroke-width="1" fill="none" opacity="0.4"/>
+                <path d="M18 18 Q28 16 38 18" stroke="${color.accent}" stroke-width="1" fill="none" opacity="0.4"/>
+                <path d="M20 24 Q28 26 36 24" stroke="${color.accent}" stroke-width="1" fill="none" opacity="0.4"/>
+                
+                <!-- Bocca -->
+                <ellipse cx="6" cy="18" rx="2" ry="1.5" fill="${color.fin}"/>
+            </svg>
+        `;
+        
+        fishContainer.appendChild(fish);
+        
+        fish.animate([
+            { 
+                transform: `translateY(0) rotate(0deg)`,
+                opacity: 0
+            },
+            {
+                transform: `translateY(-${jumpHeight * 0.3}px) rotate(-30deg)`,
+                opacity: 0.9,
+                offset: 0.2
+            },
+            { 
+                transform: `translateY(-${jumpHeight}px) rotate(-45deg)`,
+                opacity: 1,
+                offset: 0.45
+            },
+            {
+                transform: `translateY(-${jumpHeight * 0.7}px) rotate(-20deg)`,
+                opacity: 1,
+                offset: 0.65
+            },
+            {
+                transform: `translateY(-${jumpHeight * 0.3}px) rotate(10deg)`,
+                opacity: 0.8,
+                offset: 0.85
+            },
+            { 
+                transform: `translateY(0) rotate(45deg)`,
+                opacity: 0
+            }
+        ], {
+            duration: duration * 1000,
+            delay: delay * 1000,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            fill: 'forwards'
+        });
+        
+        setTimeout(() => {
+            fish.remove();
+        }, (duration + delay) * 1000 + 100);
+        
+        const splash = document.createElement('div');
+        splash.style.cssText = `
+            position: absolute;
+            bottom: ${jumpHeight}px;
+            left: calc(${startX}% + ${size/2}px);
+            width: 40px;
+            height: 20px;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 1;
+        `;
+        fishContainer.appendChild(splash);
+        
+        setTimeout(() => {
+            splash.animate([
+                { transform: 'scale(0.5)', opacity: 0.8 },
+                { transform: 'scale(1.5)', opacity: 0 }
+            ], {
+                duration: 400,
+                easing: 'ease-out'
+            });
+        }, (duration * 0.45 + delay) * 1000);
+        
+        setTimeout(() => {
+            splash.animate([
+                { transform: 'scale(0.5)', opacity: 0.7 },
+                { transform: 'scale(1.2)', opacity: 0 }
+            ], {
+                duration: 300,
+                easing: 'ease-out'
+            });
+        }, (duration + delay) * 1000);
+        
+        setTimeout(() => {
+            splash.remove();
+        }, (duration + delay) * 1000 + 400);
+    }
+    
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => createFish(), Math.random() * 3000);
+    }
+    
+    setInterval(() => {
+        if (Math.random() > 0.3) {
+            createFish();
+        }
+    }, 4000);
+    
     for (let i = 0; i < 5; i++) {
         const seagull = document.createElement('div');
         seagull.className = 'seagull';
@@ -209,6 +373,7 @@
     `;
     document.head.appendChild(style);
 })();
+
 
 
 
