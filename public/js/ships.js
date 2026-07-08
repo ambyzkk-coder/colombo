@@ -1,8 +1,8 @@
 (function() {
     function createShip() {
         const ship = document.createElement('div');
-        const size = 15 + Math.random() * 10;
-        const bottom = 180 + Math.random() * 40;
+        const size = 20 + Math.random() * 15;
+        const bottom = 400 + Math.random() * 150;
         const duration = 100 + Math.random() * 50;
         const delay = Math.random() * 5;
         
@@ -13,7 +13,7 @@
             width: ${size * 3}px;
             height: ${size * 2.5}px;
             z-index: 0;
-            opacity: 0.25;
+            opacity: 0.2;
             pointer-events: none;
             animation: ship-sail ${duration}s linear ${delay}s, ship-bob 4s ease-in-out infinite;
         `;
@@ -46,7 +46,7 @@
                 transform: translateX(0);
             }
             100% {
-                transform: translateX(calc(100vw + 90px));
+                transform: translateX(calc(100vw + 105px));
             }
         }
         
@@ -55,10 +55,10 @@
                 transform: translateY(0) rotate(0deg); 
             }
             25% { 
-                transform: translateY(-2px) rotate(0.5deg); 
+                transform: translateY(-3px) rotate(0.5deg); 
             }
             50% { 
-                transform: translateY(1px) rotate(-0.3deg); 
+                transform: translateY(2px) rotate(-0.3deg); 
             }
             75% { 
                 transform: translateY(-1px) rotate(0.3deg); 
