@@ -1,4 +1,20 @@
 (function() {
+    const weatherOverlay = document.createElement('div');
+    weatherOverlay.id = 'weather-overlay';
+    weatherOverlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, #ff7e5f 0%, #feb47b 30%, #ffb88c 50%, #de6262 70%, #5b2c6f 100%);
+        z-index: -2;
+        opacity: 0;
+        transition: opacity 2s ease-in-out;
+        pointer-events: none;
+    `;
+    document.body.insertBefore(weatherOverlay, document.body.firstChild);
+    
     const sunsetContainer = document.createElement('div');
     sunsetContainer.id = 'sunset-container';
     sunsetContainer.style.cssText = `
@@ -11,7 +27,7 @@
         z-index: -1;
         overflow: hidden;
         opacity: 0;
-        transition: opacity 1.5s ease-in-out;
+        transition: opacity 2s ease-in-out;
     `;
     
     const sun = document.createElement('div');
@@ -140,10 +156,10 @@
     sunsetContainer.appendChild(birds);
     document.body.appendChild(sunsetContainer);
     
-    document.body.style.transition = 'background 2s ease-in-out';
-    
-    setTimeout(() => {
-        document.body.style.background = 'linear-gradient(180deg, #ff7e5f 0%, #feb47b 30%, #ffb88c 50%, #de6262 70%, #5b2c6f 100%)';
-        sunsetContainer.style.opacity = '1';
-    }, 50);
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            weatherOverlay.style.opacity = '1';
+            sunsetContainer.style.opacity = '1';
+        }, 100);
+    });
 })();

@@ -1,4 +1,20 @@
 (function() {
+    const weatherOverlay = document.createElement('div');
+    weatherOverlay.id = 'weather-overlay';
+    weatherOverlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, #4a5568 0%, #718096 40%, #a0aec0 100%);
+        z-index: -2;
+        opacity: 0;
+        transition: opacity 2s ease-in-out;
+        pointer-events: none;
+    `;
+    document.body.insertBefore(weatherOverlay, document.body.firstChild);
+    
     const rainContainer = document.createElement('div');
     rainContainer.id = 'rain-container';
     rainContainer.style.cssText = `
@@ -11,7 +27,7 @@
         z-index: 0;
         overflow: hidden;
         opacity: 0;
-        transition: opacity 1.5s ease-in-out;
+        transition: opacity 2s ease-in-out;
     `;
     
     const raindrops = [];
@@ -52,7 +68,7 @@
         pointer-events: none;
         z-index: 0;
         opacity: 0;
-        transition: opacity 1.5s ease-in-out;
+        transition: opacity 2s ease-in-out;
     `;
     
     for (let i = 0; i < 30; i++) {
@@ -131,11 +147,11 @@
     document.body.appendChild(splashContainer);
     document.body.appendChild(lightnings);
     
-    document.body.style.transition = 'background 2s ease-in-out';
-    
-    setTimeout(() => {
-        document.body.style.background = 'linear-gradient(180deg, #4a5568 0%, #718096 40%, #a0aec0 100%)';
-        rainContainer.style.opacity = '1';
-        splashContainer.style.opacity = '1';
-    }, 50);
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            weatherOverlay.style.opacity = '1';
+            rainContainer.style.opacity = '1';
+            splashContainer.style.opacity = '1';
+        }, 100);
+    });
 })();

@@ -11,7 +11,13 @@ body {
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
-    transition: background 1.5s ease-in-out;
+    transition: background 2s ease-in-out;
+    animation: initial-fade 0.5s ease-in-out;
+}
+
+@keyframes initial-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 body::before {

@@ -101,6 +101,167 @@
     rocks.appendChild(waveLine2);
     document.body.appendChild(rocks);
     
+    const fishContainer = document.createElement('div');
+    fishContainer.id = 'fish-container';
+    fishContainer.style.cssText = `
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    `;
+    document.body.appendChild(fishContainer);
+    
+    function createFish() {
+        const fish = document.createElement('div');
+        const startX = 10 + Math.random() * 80;
+        const size = 25 + Math.random() * 20;
+        const jumpHeight = 120 + Math.random() * 100;
+        const jumpDistance = -(80 + Math.random() * 120);
+        const duration = 1.8 + Math.random() * 0.8;
+        
+        const fishColors = [
+            { body: '#8b8b8b', fin: '#6e6e6e', accent: '#a5a5a5', belly: '#c8c8c8' },
+            { body: '#9c8b7a', fin: '#7a6e5e', accent: '#b8a898', belly: '#d4c4b4' },
+            { body: '#7a7a7a', fin: '#5e5e5e', accent: '#9a9a9a', belly: '#b8b8b8' },
+            { body: '#8b7a6b', fin: '#6e5e4e', accent: '#a89888', belly: '#c8b8a8' },
+            { body: '#707070', fin: '#505050', accent: '#888888', belly: '#a0a0a0' }
+        ];
+        
+        const color = fishColors[Math.floor(Math.random() * fishColors.length)];
+        
+        fish.style.cssText = `
+            position: absolute;
+            bottom: 0;
+            left: ${startX}%;
+            width: ${size}px;
+            height: ${size * 0.5}px;
+            opacity: 0;
+            z-index: 2;
+        `;
+        
+        fish.innerHTML = `
+            <svg width="${size}" height="${size * 0.5}" viewBox="0 0 70 35">
+                <ellipse cx="30" cy="17" rx="24" ry="14" fill="${color.body}"/>
+                <ellipse cx="30" cy="22" rx="20" ry="7" fill="${color.belly}" opacity="0.4"/>
+                <path d="M52 17 L68 6 L68 28 Z" fill="${color.fin}"/>
+                <path d="M28 5 Q34 0 40 5 L40 10 Q34 6 28 10 Z" fill="${color.fin}" opacity="0.85"/>
+                <path d="M24 30 Q30 35 36 30 L36 25 Q30 28 24 25 Z" fill="${color.fin}" opacity="0.85"/>
+                <circle cx="16" cy="13" r="3.5" fill="white"/>
+                <circle cx="17" cy="13" r="2" fill="black"/>
+                <circle cx="17.5" cy="12.5" r="0.8" fill="white"/>
+                <path d="M22 15 Q20 17 22 19" stroke="${color.accent}" stroke-width="1.2" fill="none" opacity="0.5"/>
+                <path d="M16 10 Q30 7 44 10" stroke="${color.accent}" stroke-width="0.8" fill="none" opacity="0.3"/>
+                <path d="M14 17 Q30 14 46 17" stroke="${color.accent}" stroke-width="0.8" fill="none" opacity="0.3"/>
+                <path d="M16 24 Q30 27 44 24" stroke="${color.accent}" stroke-width="0.8" fill="none" opacity="0.3"/>
+            </svg>
+        `;
+        
+        fishContainer.appendChild(fish);
+        
+        fish.animate([
+            { 
+                transform: `translate(0, 0) rotate(45deg)`,
+                opacity: 0
+            },
+            {
+                transform: `translate(${jumpDistance * 0.2}px, -${jumpHeight * 0.5}px) rotate(20deg)`,
+                opacity: 1,
+                offset: 0.15
+            },
+            { 
+                transform: `translate(${jumpDistance * 0.5}px, -${jumpHeight}px) rotate(0deg)`,
+                opacity: 1,
+                offset: 0.4
+            },
+            {
+                transform: `translate(${jumpDistance * 0.75}px, -${jumpHeight * 0.65}px) rotate(-15deg)`,
+                opacity: 1,
+                offset: 0.6
+            },
+            {
+                transform: `translate(${jumpDistance * 0.9}px, -${jumpHeight * 0.25}px) rotate(-35deg)`,
+                opacity: 0.8,
+                offset: 0.8
+            },
+            { 
+                transform: `translate(${jumpDistance}px, 0) rotate(-45deg)`,
+                opacity: 0
+            }
+        ], {
+            duration: duration * 1000,
+            easing: 'cubic-bezier(0.35, 0.25, 0.45, 0.75)',
+            fill: 'forwards'
+        });
+        
+        setTimeout(() => {
+            fish.remove();
+        }, duration * 1000 + 100);
+        
+        const splashStart = document.createElement('div');
+        splashStart.style.cssText = `
+            position: absolute;
+            bottom: 0;
+            left: ${startX}%;
+            width: 30px;
+            height: 15px;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.7) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+        `;
+        fishContainer.appendChild(splashStart);
+        
+        setTimeout(() => {
+            splashStart.animate([
+                { transform: 'scale(0.3)', opacity: 0.9 },
+                { transform: 'scale(1.5)', opacity: 0 }
+            ], {
+                duration: 400,
+                easing: 'ease-out'
+            });
+        }, 50);
+        
+        const splashEnd = document.createElement('div');
+        splashEnd.style.cssText = `
+            position: absolute;
+            bottom: 0;
+            left: calc(${startX}% + ${jumpDistance}px);
+            width: 35px;
+            height: 18px;
+            background: radial-gradient(ellipse, rgba(255,255,255,0.7) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+        `;
+        fishContainer.appendChild(splashEnd);
+        
+        setTimeout(() => {
+            splashEnd.animate([
+                { transform: 'scale(0.3)', opacity: 0.9 },
+                { transform: 'scale(1.5)', opacity: 0 }
+            ], {
+                duration: 400,
+                easing: 'ease-out'
+            });
+        }, duration * 1000 - 50);
+        
+        setTimeout(() => {
+            splashStart.remove();
+            splashEnd.remove();
+        }, duration * 1000 + 400);
+    }
+    
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => createFish(), Math.random() * 3000);
+    }
+    
+    setInterval(() => {
+        if (Math.random() > 0.3) {
+            createFish();
+        }
+    }, 4000);
+    
     const style = document.createElement('style');
     style.textContent = `
         @keyframes foam-pulse {
@@ -127,6 +288,3 @@
     `;
     document.head.appendChild(style);
 })();
-
-
-
