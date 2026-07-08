@@ -37,6 +37,13 @@ app.get('/storia', (req, res) => {
     });
 });
 
+app.get('/dashboard', (req, res) => {
+    res.render('dashboard', { 
+        titolo: 'Dashboard Petoi',
+        sottotitolo: 'Controlla il robot Petoi in tempo reale'
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Server avviato sulla porta ${PORT}`);
 });
