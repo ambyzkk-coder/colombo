@@ -170,11 +170,20 @@ h1 {
 
 .subtitle {
     text-align: center;
-    color: #1a4a6e;
-    font-size: 4.5em;
+    color: #000000;
+    font-size: 5.5em;
     margin-bottom: 40px;
     font-weight: bold;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
+    text-shadow: 
+        -3px -3px 0 #ffffff,
+        3px -3px 0 #ffffff,
+        -3px 3px 0 #ffffff,
+        3px 3px 0 #ffffff,
+        -3px 0 0 #ffffff,
+        3px 0 0 #ffffff,
+        0 -3px 0 #ffffff,
+        0 3px 0 #ffffff;
 }
 
 .content {
