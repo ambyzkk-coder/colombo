@@ -6,29 +6,30 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.render('home', { 
-        titolo: 'Cristoforo Colombo',
-        sottotitolo: 'L\'esploratore che cambiò il mondo'
+    res.render('chi-siamo', { 
+        titolo: 'Chi Siamo',
+        sottotitolo: 'Scopri il nostro progetto su Cristoforo Colombo'
     });
 });
 
-app.get('/viaggi', (req, res) => {
-    const viaggi = [
-        { anno: 1492, destinazione: 'Bahamas', navi: 'Niña, Pinta, Santa María' },
-        { anno: 1493, destinazione: 'Caraibi', navi: '17 navi' },
-        { anno: 1498, destinazione: 'Sud America', navi: '6 navi' },
-        { anno: 1502, destinazione: 'America Centrale', navi: '4 navi' }
-    ];
-    res.render('viaggi', { 
-        titolo: 'I Viaggi di Colombo',
-        viaggi: viaggi
+app.get('/chi-siamo', (req, res) => {
+    res.render('chi-siamo', { 
+        titolo: 'Chi Siamo',
+        sottotitolo: 'Scopri il nostro progetto su Cristoforo Colombo'
+    });
+});
+
+app.get('/progetto', (req, res) => {
+    res.render('progetto', { 
+        titolo: 'Il Progetto',
+        sottotitolo: 'Obiettivi e finalità della nostra ricerca'
     });
 });
 
 app.get('/storia', (req, res) => {
     res.render('storia', { 
         titolo: 'La Storia',
-        contenuto: 'Cristoforo Colombo nacque a Genova nel 1451. Fu un navigatore ed esploratore che, sotto il patrocinio della Spagna, attraversò l\'Atlantico nel 1492, raggiungendo le Americhe.'
+        sottotitolo: 'La vita e le imprese di Cristoforo Colombo'
     });
 });
 
