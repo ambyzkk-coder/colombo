@@ -79,14 +79,14 @@ app.post('/petoi/command-broadcast', (req, res) => {
 app.get('/', (req, res) => {
     res.render('chi-siamo', { 
         titolo: 'Chi Siamo',
-        sottotitolo: 'Scopri il nostro progetto su Cristoforo Colombo'
+        sottotitolo: 'gli esploratori IOTEP'
     });
 });
 
 app.get('/chi-siamo', (req, res) => {
     res.render('chi-siamo', { 
         titolo: 'Chi Siamo',
-        sottotitolo: 'Scopri il nostro progetto su Cristoforo Colombo'
+        sottotitolo: 'gli esploratori IOTEP'
     });
 });
 
