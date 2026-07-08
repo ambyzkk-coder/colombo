@@ -12,7 +12,7 @@
             left: -${size * 3}px;
             width: ${size * 3}px;
             height: ${size * 2.5}px;
-            z-index: 0;
+            z-index: -2;
             opacity: 0.2;
             pointer-events: none;
             animation: ship-sail ${duration}s linear ${delay}s, ship-bob 4s ease-in-out infinite;
