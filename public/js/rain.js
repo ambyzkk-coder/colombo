@@ -10,6 +10,8 @@
         pointer-events: none;
         z-index: 0;
         overflow: hidden;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
     `;
     
     const raindrops = [];
@@ -49,6 +51,8 @@
         height: 100px;
         pointer-events: none;
         z-index: 0;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
     `;
     
     for (let i = 0; i < 30; i++) {
@@ -120,10 +124,6 @@
                 opacity: 0.3;
             }
         }
-        
-        #rain-container + div {
-            filter: brightness(0.85) contrast(1.05);
-        }
     `;
     
     document.head.appendChild(style);
@@ -132,4 +132,10 @@
     document.body.appendChild(lightnings);
     
     document.body.style.background = 'linear-gradient(180deg, #4a5568 0%, #718096 40%, #a0aec0 100%)';
+    document.body.style.transition = 'background 1.5s ease-in-out';
+    
+    setTimeout(() => {
+        rainContainer.style.opacity = '1';
+        splashContainer.style.opacity = '1';
+    }, 100);
 })();
