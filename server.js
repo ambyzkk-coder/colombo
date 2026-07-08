@@ -93,14 +93,14 @@ app.get('/chi-siamo', (req, res) => {
 app.get('/progetto', (req, res) => {
     res.render('progetto', { 
         titolo: 'Il Progetto',
-        sottotitolo: 'Obiettivi e finalità della nostra ricerca'
+        sottotitolo: ''
     });
 });
 
 app.get('/storia', (req, res) => {
     res.render('storia', { 
         titolo: 'La Storia',
-        sottotitolo: 'La vita e le imprese di Cristoforo Colombo'
+        sottotitolo: ''
     });
 });
 
