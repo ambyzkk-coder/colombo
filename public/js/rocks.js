@@ -24,34 +24,6 @@
         opacity: 0.95;
     `;
     
-    const splashContainer1 = document.createElement('div');
-    splashContainer1.style.cssText = `
-        position: absolute;
-        bottom: 115px;
-        left: calc(3% + 60px);
-        width: 100px;
-        height: 80px;
-    `;
-    
-    for (let i = 0; i < 8; i++) {
-        const droplet = document.createElement('div');
-        const leftPos = Math.random() * 80;
-        const size = 8 + Math.random() * 12;
-        droplet.style.cssText = `
-            position: absolute;
-            bottom: ${Math.random() * 30}px;
-            left: ${leftPos}px;
-            width: ${size}px;
-            height: ${size * 1.5}px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(200,230,255,0.7) 50%, rgba(150,200,255,0.5) 100%);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: droplet-rise ${1.5 + Math.random()}s ease-out infinite;
-            animation-delay: ${Math.random() * 2}s;
-            opacity: 0;
-        `;
-        splashContainer1.appendChild(droplet);
-    }
-    
     const foam1 = document.createElement('div');
     foam1.style.cssText = `
         position: absolute;
@@ -92,34 +64,6 @@
         opacity: 0.95;
     `;
     
-    const splashContainer2 = document.createElement('div');
-    splashContainer2.style.cssText = `
-        position: absolute;
-        bottom: 85px;
-        right: calc(4% + 50px);
-        width: 90px;
-        height: 70px;
-    `;
-    
-    for (let i = 0; i < 6; i++) {
-        const droplet = document.createElement('div');
-        const leftPos = Math.random() * 70;
-        const size = 6 + Math.random() * 10;
-        droplet.style.cssText = `
-            position: absolute;
-            bottom: ${Math.random() * 25}px;
-            left: ${leftPos}px;
-            width: ${size}px;
-            height: ${size * 1.5}px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(200,230,255,0.7) 50%, rgba(150,200,255,0.5) 100%);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: droplet-rise ${1.8 + Math.random()}s ease-out infinite;
-            animation-delay: ${Math.random() * 2}s;
-            opacity: 0;
-        `;
-        splashContainer2.appendChild(droplet);
-    }
-    
     const foam2 = document.createElement('div');
     foam2.style.cssText = `
         position: absolute;
@@ -150,41 +94,15 @@
     `;
     
     rocks.appendChild(rock1);
-    rocks.appendChild(splashContainer1);
     rocks.appendChild(foam1);
     rocks.appendChild(waveLine1);
     rocks.appendChild(rock2);
-    rocks.appendChild(splashContainer2);
     rocks.appendChild(foam2);
     rocks.appendChild(waveLine2);
     document.body.appendChild(rocks);
     
-    for (let i = 0; i < 5; i++) {
-        const seagull = document.createElement('div');
-        seagull.className = 'seagull';
-        document.body.appendChild(seagull);
-    }
-    
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes droplet-rise {
-            0% { 
-                transform: translateY(0) scale(0.5); 
-                opacity: 0;
-            }
-            20% { 
-                opacity: 0.8;
-            }
-            50% { 
-                transform: translateY(-30px) scale(1); 
-                opacity: 0.6;
-            }
-            100% { 
-                transform: translateY(-60px) scale(0.3); 
-                opacity: 0;
-            }
-        }
-        
         @keyframes foam-pulse {
             0%, 100% { 
                 transform: scaleX(1) scaleY(1); 
