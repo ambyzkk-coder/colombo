@@ -131,11 +131,11 @@
     document.body.appendChild(splashContainer);
     document.body.appendChild(lightnings);
     
-    document.body.style.background = 'linear-gradient(180deg, #4a5568 0%, #718096 40%, #a0aec0 100%)';
-    document.body.style.transition = 'background 1.5s ease-in-out';
+    document.body.style.transition = 'background 2s ease-in-out';
     
     setTimeout(() => {
+        document.body.style.background = 'linear-gradient(180deg, #4a5568 0%, #718096 40%, #a0aec0 100%)';
         rainContainer.style.opacity = '1';
         splashContainer.style.opacity = '1';
-    }, 100);
+    }, 50);
 })();

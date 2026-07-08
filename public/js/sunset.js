@@ -140,10 +140,10 @@
     sunsetContainer.appendChild(birds);
     document.body.appendChild(sunsetContainer);
     
-    document.body.style.background = 'linear-gradient(180deg, #ff7e5f 0%, #feb47b 30%, #ffb88c 50%, #de6262 70%, #5b2c6f 100%)';
-    document.body.style.transition = 'background 1.5s ease-in-out';
+    document.body.style.transition = 'background 2s ease-in-out';
     
     setTimeout(() => {
+        document.body.style.background = 'linear-gradient(180deg, #ff7e5f 0%, #feb47b 30%, #ffb88c 50%, #de6262 70%, #5b2c6f 100%)';
         sunsetContainer.style.opacity = '1';
-    }, 100);
+    }, 50);
 })();
