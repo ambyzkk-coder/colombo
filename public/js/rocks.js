@@ -6,7 +6,7 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 200px;
+        height: 250px;
         z-index: 0;
         pointer-events: none;
     `;
@@ -14,129 +14,201 @@
     const rock1 = document.createElement('div');
     rock1.style.cssText = `
         position: absolute;
-        bottom: 100px;
-        left: 12%;
-        width: 130px;
-        height: 150px;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 150'%3E%3Cpath fill='%232a3f4f' d='M15,150 L25,85 Q30,65 40,75 L50,55 Q60,35 75,45 L85,40 Q100,30 105,50 L110,75 Q115,95 120,150 Z'/%3E%3Cpath fill='%231d2d3a' d='M30,150 L40,100 Q45,85 55,90 L65,75 Q75,60 85,70 L95,80 Q105,90 110,150 Z'/%3E%3Cpath fill='%230f1a22' d='M45,150 L55,110 Q60,100 70,105 L80,100 Q90,95 95,115 L100,150 Z'/%3E%3C/svg%3E") no-repeat;
+        bottom: 120px;
+        left: 3%;
+        width: 140px;
+        height: 160px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 160'%3E%3Cpath fill='%232a3f4f' d='M15,160 L25,85 Q30,60 45,75 L55,50 Q65,25 85,40 L95,35 Q115,25 120,55 L125,80 Q130,100 135,160 Z'/%3E%3Cpath fill='%231d2d3a' d='M35,160 L45,100 Q50,80 65,90 L75,70 Q90,55 100,75 L110,90 Q120,105 125,160 Z'/%3E%3Cpath fill='%230f1a22' d='M55,160 L65,115 Q70,100 85,110 L95,105 Q105,100 110,125 L115,160 Z'/%3E%3C/svg%3E") no-repeat;
         background-size: contain;
-        filter: drop-shadow(0 5px 20px rgba(0,0,0,0.5));
-        opacity: 0.9;
+        filter: drop-shadow(0 5px 25px rgba(0,0,0,0.6));
+        opacity: 0.95;
     `;
     
-    const splash1 = document.createElement('div');
-    splash1.className = 'splash';
-    splash1.style.cssText = `
+    const splashContainer1 = document.createElement('div');
+    splashContainer1.style.cssText = `
         position: absolute;
-        bottom: 95px;
-        left: calc(12% + 60px);
-        width: 60px;
-        height: 60px;
-        background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 30%, transparent 70%);
-        border-radius: 50%;
-        animation: splash-wave 2s ease-in-out infinite;
-        filter: blur(2px);
+        bottom: 115px;
+        left: calc(3% + 60px);
+        width: 100px;
+        height: 80px;
     `;
+    
+    for (let i = 0; i < 8; i++) {
+        const droplet = document.createElement('div');
+        const leftPos = Math.random() * 80;
+        const size = 8 + Math.random() * 12;
+        droplet.style.cssText = `
+            position: absolute;
+            bottom: ${Math.random() * 30}px;
+            left: ${leftPos}px;
+            width: ${size}px;
+            height: ${size * 1.5}px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(200,230,255,0.7) 50%, rgba(150,200,255,0.5) 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: droplet-rise ${1.5 + Math.random()}s ease-out infinite;
+            animation-delay: ${Math.random() * 2}s;
+            opacity: 0;
+        `;
+        splashContainer1.appendChild(droplet);
+    }
     
     const foam1 = document.createElement('div');
     foam1.style.cssText = `
         position: absolute;
-        bottom: 90px;
-        left: calc(12% + 30px);
-        width: 80px;
-        height: 25px;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6) 20%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.6) 80%, transparent);
+        bottom: 110px;
+        left: calc(3% + 20px);
+        width: 120px;
+        height: 30px;
+        background: radial-gradient(ellipse at center, rgba(255,255,255,0.85) 0%, rgba(220,240,255,0.6) 40%, transparent 70%);
         border-radius: 50%;
-        filter: blur(3px);
-        animation: foam-move 3s ease-in-out infinite;
+        filter: blur(2px);
+        animation: foam-pulse 2s ease-in-out infinite;
+    `;
+    
+    const waveLine1 = document.createElement('div');
+    waveLine1.style.cssText = `
+        position: absolute;
+        bottom: 105px;
+        left: calc(3% - 10px);
+        width: 150px;
+        height: 40px;
+        border: 3px solid rgba(255,255,255,0.4);
+        border-top: none;
+        border-radius: 0 0 50% 50%;
+        filter: blur(1px);
+        animation: wave-crash 3s ease-in-out infinite;
     `;
     
     const rock2 = document.createElement('div');
     rock2.style.cssText = `
         position: absolute;
-        bottom: 70px;
-        right: 18%;
-        width: 100px;
-        height: 120px;
-        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Cpath fill='%232a3f4f' d='M8,120 L18,70 Q23,55 33,60 L43,45 Q53,30 63,40 L73,55 Q83,70 88,120 Z'/%3E%3Cpath fill='%231d2d3a' d='M22,120 L32,80 Q37,70 47,75 L57,65 Q67,55 72,80 L77,120 Z'/%3E%3Cpath fill='%230f1a22' d='M37,120 L47,90 Q52,80 62,85 L72,95 L77,120 Z'/%3E%3C/svg%3E") no-repeat;
+        bottom: 90px;
+        right: 4%;
+        width: 110px;
+        height: 130px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 130'%3E%3Cpath fill='%232a3f4f' d='M10,130 L20,70 Q25,45 40,60 L50,35 Q60,15 80,35 L90,55 Q100,75 105,130 Z'/%3E%3Cpath fill='%231d2d3a' d='M25,130 L35,80 Q40,60 55,70 L65,55 Q80,40 90,65 L100,85 Q105,105 105,130 Z'/%3E%3Cpath fill='%230f1a22' d='M45,130 L55,90 Q60,75 75,85 L85,95 Q95,105 100,130 Z'/%3E%3C/svg%3E") no-repeat;
         background-size: contain;
-        filter: drop-shadow(0 5px 20px rgba(0,0,0,0.5));
-        opacity: 0.9;
+        filter: drop-shadow(0 5px 25px rgba(0,0,0,0.6));
+        opacity: 0.95;
     `;
     
-    const splash2 = document.createElement('div');
-    splash2.className = 'splash';
-    splash2.style.cssText = `
+    const splashContainer2 = document.createElement('div');
+    splashContainer2.style.cssText = `
         position: absolute;
-        bottom: 65px;
-        right: calc(18% + 40px);
-        width: 50px;
-        height: 50px;
-        background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 30%, transparent 70%);
-        border-radius: 50%;
-        animation: splash-wave 2.5s ease-in-out infinite;
-        animation-delay: 0.5s;
-        filter: blur(2px);
+        bottom: 85px;
+        right: calc(4% + 50px);
+        width: 90px;
+        height: 70px;
     `;
+    
+    for (let i = 0; i < 6; i++) {
+        const droplet = document.createElement('div');
+        const leftPos = Math.random() * 70;
+        const size = 6 + Math.random() * 10;
+        droplet.style.cssText = `
+            position: absolute;
+            bottom: ${Math.random() * 25}px;
+            left: ${leftPos}px;
+            width: ${size}px;
+            height: ${size * 1.5}px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(200,230,255,0.7) 50%, rgba(150,200,255,0.5) 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: droplet-rise ${1.8 + Math.random()}s ease-out infinite;
+            animation-delay: ${Math.random() * 2}s;
+            opacity: 0;
+        `;
+        splashContainer2.appendChild(droplet);
+    }
     
     const foam2 = document.createElement('div');
     foam2.style.cssText = `
         position: absolute;
-        bottom: 60px;
-        right: calc(18% + 20px);
-        width: 70px;
-        height: 20px;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6) 20%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.6) 80%, transparent);
+        bottom: 80px;
+        right: calc(4% + 10px);
+        width: 100px;
+        height: 25px;
+        background: radial-gradient(ellipse at center, rgba(255,255,255,0.85) 0%, rgba(220,240,255,0.6) 40%, transparent 70%);
         border-radius: 50%;
-        filter: blur(3px);
-        animation: foam-move 3.5s ease-in-out infinite;
-        animation-delay: 0.3s;
+        filter: blur(2px);
+        animation: foam-pulse 2.5s ease-in-out infinite;
+        animation-delay: 0.5s;
+    `;
+    
+    const waveLine2 = document.createElement('div');
+    waveLine2.style.cssText = `
+        position: absolute;
+        bottom: 75px;
+        right: calc(4% - 10px);
+        width: 130px;
+        height: 35px;
+        border: 3px solid rgba(255,255,255,0.4);
+        border-top: none;
+        border-radius: 0 0 50% 50%;
+        filter: blur(1px);
+        animation: wave-crash 3.5s ease-in-out infinite;
+        animation-delay: 0.7s;
     `;
     
     rocks.appendChild(rock1);
-    rocks.appendChild(splash1);
+    rocks.appendChild(splashContainer1);
     rocks.appendChild(foam1);
+    rocks.appendChild(waveLine1);
     rocks.appendChild(rock2);
-    rocks.appendChild(splash2);
+    rocks.appendChild(splashContainer2);
     rocks.appendChild(foam2);
+    rocks.appendChild(waveLine2);
     document.body.appendChild(rocks);
-    
-    const seagulls = document.createElement('div');
-    seagulls.className = 'seagulls';
     
     for (let i = 0; i < 5; i++) {
         const seagull = document.createElement('div');
         seagull.className = 'seagull';
-        seagulls.appendChild(seagull);
+        document.body.appendChild(seagull);
     }
-    
-    document.body.appendChild(seagulls);
     
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes splash-wave {
-            0%, 100% { 
-                transform: scale(0.8) translateY(0); 
-                opacity: 0.6;
+        @keyframes droplet-rise {
+            0% { 
+                transform: translateY(0) scale(0.5); 
+                opacity: 0;
+            }
+            20% { 
+                opacity: 0.8;
             }
             50% { 
-                transform: scale(1.3) translateY(-15px); 
-                opacity: 0.9;
+                transform: translateY(-30px) scale(1); 
+                opacity: 0.6;
+            }
+            100% { 
+                transform: translateY(-60px) scale(0.3); 
+                opacity: 0;
             }
         }
         
-        @keyframes foam-move {
+        @keyframes foam-pulse {
             0%, 100% { 
-                transform: translateX(0) scaleX(1); 
-                opacity: 0.7;
+                transform: scaleX(1) scaleY(1); 
+                opacity: 0.8;
             }
             50% { 
-                transform: translateX(10px) scaleX(1.2); 
-                opacity: 0.9;
+                transform: scaleX(1.3) scaleY(0.8); 
+                opacity: 1;
+            }
+        }
+        
+        @keyframes wave-crash {
+            0%, 100% { 
+                transform: translateY(0) scaleY(1);
+                opacity: 0.4;
+            }
+            50% { 
+                transform: translateY(10px) scaleY(1.2);
+                opacity: 0.6;
             }
         }
     `;
     document.head.appendChild(style);
 })();
+
 
 
