@@ -49,91 +49,99 @@ body::after {
 
 .seagull {
     position: fixed;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 110'%3E%3C!-- Ombra corpo --%3E%3Cellipse cx='90' cy='70' rx='40' ry='12' fill='rgba(0,0, 0, 0.1)'/%3E%3C!-- Corpo principale --%3E%3Cellipse cx='90' cy='65' rx='38' ry='20' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='0.5'/%3E%3C!-- Testa --%3E%3Ccircle cx='140' cy='55' r='14' fill='%23ffffff' stroke='%23e8e8e8' stroke-width='0.5'/%3E%3C!-- Becco arancione --%3E%3Cpath d='M154 52 L170 56 L154 60 Z' fill='%23ff9800' stroke='%23e68a00' stroke-width='0.5'/%3E%3C!-- Occhio nero --%3E%3Ccircle cx='145' cy='52' r='3' fill='%23000000'/%3E%3Ccircle cx='144' cy='51' r='1' fill='%23ffffff'/%3E%3C!-- Ala sinistra spiegata --%3E%3Cpath d='M55 65 Q25 30 8 45 Q12 50 18 48 Q28 55 40 62 Q50 68 60 70 Z' fill='%23ffffff' stroke='%23d8d8d8' stroke-width='1'/%3E%3C!-- Piume ala sinistra --%3E%3Cpath d='M15 48 Q22 40 30 45' stroke='%23c8c8c8' stroke-width='2' fill='none'/%3E%3Cpath d='M20 50 Q28 42 38 48' stroke='%23d0d0d0' stroke-width='1.5' fill='none'/%3E%3C!-- Ala destra --%3E%3Cpath d='M75 55 Q95 25 125 35 Q115 45 110 42 Q100 48 90 55 Z' fill='%23ffffff' stroke='%23d8d8d8' stroke-width='1'/%3E%3C!-- Piume ala destra --%3E%3Cpath d='M110 38 Q118 32 120 37' stroke='%23c8c8c8' stroke-width='2' fill='none'/%3E%3C!-- Coda --%3E%3Cpath d='M52 68 Q40 75 35 70 Q45 67 52 65 Z' fill='%23f8f8f8' stroke='%23e0e0e0' stroke-width='0.5'/%3E%3C!-- Dettagli piume corpo --%3E%3Cpath d='M70 60 Q80 55 90 60 Q100 55 110 60' stroke='%23f0f0f0' stroke-width='1' fill='none'/%3E%3C/svg%3E") no-repeat center;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120'%3E%3C!-- Ombra corpo --%3E%3Cellipse cx='100' cy='75' rx='48' ry='14' fill='rgba(0,0, 0, 0.15)'/%3E%3C!-- Corpo principale bianco --%3E%3Cellipse cx='100' cy='70' rx='45' ry='23' fill='%23ffffff' stroke='%23d5d5d5' stroke-width='1'/%3E%3C!-- Testa --%3E%3Ccircle cx='155' cy='58' r='16' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='1'/%3E%3C!-- Becco arancione brillante --%3E%3Cpath d='M171 54 L190 59 L171 64 Z' fill='%23ff9800' stroke='%23f57c00' stroke-width='1'/%3E%3C!-- Occhio con dettaglio --%3E%3Ccircle cx='160' cy='55' r='4' fill='%23000000'/%3E%3Ccircle cx='159' cy='54' r='1.5' fill='%23ffffff'/%3E%3C!-- Ala sinistra grande e dettagliata --%3E%3Cpath d='M60 70 Q20 25 -8 42 Q5 58 15 52 Q28 62 45 70 Q55 75 65 73 Z' fill='%23ffffff' stroke='%23d0d0d0' stroke-width='1.5'/%3E%3Cpath d='M5 46 Q15 32 32 42' stroke='%23a0a0a0' stroke-width='3' fill='none'/%3E%3Cpath d='M12 50 Q24 36 42 48' stroke='%23b0b0b0' stroke-width='2.5' fill='none'/%3E%3Cpath d='M22 52 Q32 42 48 52' stroke='%23c0c0c0' stroke-width='2' fill='none'/%3E%3C!-- Ala destra --%3E%3Cpath d='M82 58 Q108 18 140 32 Q128 48 122 44 Q108 52 95 60 Z' fill='%23ffffff' stroke='%23d0d0d0' stroke-width='1.5'/%3E%3Cpath d='M125 36 Q138 26 145 35' stroke='%23a0a0a0' stroke-width='3' fill='none'/%3E%3Cpath d='M118 42 Q130 32 138 40' stroke='%23b0b0b0' stroke-width='2' fill='none'/%3E%3C!-- Coda --%3E%3Cpath d='M55 73 Q38 85 30 78 Q42 73 55 68 Z' fill='%23fafafa' stroke='%23e5e5e5' stroke-width='1'/%3E%3C!-- Dettagli piume corpo --%3E%3Cpath d='M75 65 Q88 58 100 65 Q112 58 125 65' stroke='%23e8e8e8' stroke-width='2' fill='none'/%3E%3Cpath d='M80 72 Q90 68 100 72 Q110 68 120 72' stroke='%23f0f0f0' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat center;
     background-size: contain;
-    z-index: 1;
-    animation: seagull-fly 22s linear infinite, seagull-flap 1s ease-in-out infinite;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+    z-index: 2;
+    animation: seagull-fly 25s linear infinite, seagull-flap 1.1s ease-in-out infinite;
+    filter: drop-shadow(0 6px 15px rgba(0,0,0,0.45));
 }
 
 @keyframes seagull-flap {
     0%, 100% { transform: scaleY(1) rotate(0deg); }
-    25% { transform: scaleY(0.92) rotate(1deg); }
-    50% { transform: scaleY(0.88) rotate(0deg); }
-    75% { transform: scaleY(0.92) rotate(-1deg); }
+    25% { transform: scaleY(0.9) rotate(1.5deg); }
+    50% { transform: scaleY(0.85) rotate(0deg); }
+    75% { transform: scaleY(0.9) rotate(-1.5deg); }
 }
 
 .seagull:nth-child(1) {
-    top: 12%;
-    left: -100px;
-    width: 95px;
-    height: 58px;
+    top: 8%;
+    left: -180px;
+    width: 180px;
+    height: 108px;
     animation-delay: 0s;
-    animation-duration: 20s;
+    animation-duration: 22s;
 }
 
 .seagull:nth-child(2) {
-    top: 28%;
-    left: -100px;
-    width: 60px;
-    height: 37px;
-    animation-delay: 4s;
-    animation-duration: 26s;
-    opacity: 0.75;
+    top: 22%;
+    left: -180px;
+    width: 140px;
+    height: 84px;
+    animation-delay: 3s;
+    animation-duration: 28s;
+    opacity: 0.9;
 }
 
 .seagull:nth-child(3) {
-    top: 8%;
-    left: -100px;
-    width: 110px;
-    height: 67px;
-    animation-delay: 9s;
-    animation-duration: 28s;
+    top: 5%;
+    left: -180px;
+    width: 200px;
+    height: 120px;
+    animation-delay: 8s;
+    animation-duration: 30s;
 }
 
 .seagull:nth-child(4) {
-    top: 22%;
-    left: -100px;
-    width: 70px;
-    height: 43px;
-    animation-delay: 14s;
-    animation-duration: 23s;
-    opacity: 0.8;
+    top: 18%;
+    left: -180px;
+    width: 160px;
+    height: 96px;
+    animation-delay: 13s;
+    animation-duration: 24s;
+    opacity: 0.85;
 }
 
 .seagull:nth-child(5) {
-    top: 35%;
-    left: -100px;
-    width: 50px;
-    height: 31px;
-    animation-delay: 7s;
-    animation-duration: 30s;
-    opacity: 0.65;
+    top: 28%;
+    left: -180px;
+    width: 130px;
+    height: 78px;
+    animation-delay: 6s;
+    animation-duration: 32s;
+    opacity: 0.8;
 }
 
 .seagull-foreground {
     position: fixed;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120'%3E%3C!-- Ombra --%3E%3Cellipse cx='100' cy='80' rx='50' ry='15' fill='rgba(0, 0, 0, 0.15)'/%3E%3C!-- Corpo grande --%3E%3Cellipse cx='100' cy='75' rx='45' ry='24' fill='%23ffffff' stroke='%23e8e8e8' stroke-width='1'/%3E%3C!-- Testa --%3E%3Ccircle cx='158' cy='62' r='17' fill='%23ffffff' stroke='%23e8e8e8' stroke-width='0.5'/%3E%3C!-- Becco --%3E%3Cpath d='M175 58 L195 63 L175 68 Z' fill='%23ffa726' stroke='%23fb8c00' stroke-width='1'/%3E%3C!-- Occhio --%3E%3Ccircle cx='163' cy='60' r='4' fill='%23000000'/%3E%3Ccircle cx='162' cy='59' r='1.5' fill='%23ffffff'/%3E%3C!-- Ala sinistra grande --%3E%3Cpath d='M60 75 Q20 20 -5 40 Q5 55 15 50 Q30 60 50 72 Z' fill='%23ffffff' stroke='%23d8d8d8' stroke-width='1.5'/%3E%3Cpath d='M5 45 Q15 32 28 40' stroke='%23b0b0b0' stroke-width='2.5' fill='none'/%3E%3Cpath d='M12 48 Q22 35 38 45' stroke='%23c0c0c0' stroke-width='2' fill='none'/%3E%3C!-- Ala destra --%3E%3Cpath d='M85 60 Q110 20 145 35 Q135 50 130 46 Q115 55 100 62 Z' fill='%23ffffff' stroke='%23d8d8d8' stroke-width='1.5'/%3E%3Cpath d='M130 40 Q142 32 148 38' stroke='%23b0b0b0' stroke-width='2.5' fill='none'/%3E%3C!-- Coda --%3E%3Cpath d='M55 78 Q38 88 32 82 Q45 77 55 73 Z' fill='%23fafafa' stroke='%23e0e0e0' stroke-width='0.5'/%3E%3C!-- Piume corpo --%3E%3Cpath d='M75 70 Q90 62 100 70 Q110 62 125 70' stroke='%23f5f5f5' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat center;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 145'%3E%3C!-- Ombra grande --%3E%3Cellipse cx='120' cy='95' rx='60' ry='18' fill='rgba(0, 0, 0, 0.2)'/%3E%3C!-- Corpo molto grande --%3E%3Cellipse cx='120' cy='90' rx='55' ry='30' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='1.5'/%3E%3C!-- Testa grande --%3E%3Ccircle cx='188' cy='72' r='22' fill='%23ffffff' stroke='%23e5e5e5' stroke-width='1'/%3E%3C!-- Becco grande --%3E%3Cpath d='M210 67 L235 74 L210 81 Z' fill='%23ffa726' stroke='%23fb8c00' stroke-width='1.5'/%3E%3C!-- Occhio grande --%3E%3Ccircle cx='194' cy='70' r='5' fill='%23000000'/%3E%3Ccircle cx='193' cy='68' r='2' fill='%23ffffff'/%3E%3C!-- Ala sinistra enorme --%3E%3Cpath d='M70 90 Q15 15 -15 38 Q0 60 12 52 Q30 68 50 82 Q62 92 78 92 Z' fill='%23ffffff' stroke='%23d5d5d5' stroke-width='2'/%3E%3Cpath d='M-5 42 Q12 22 35 38' stroke='%23909090' stroke-width='4' fill='none'/%3E%3Cpath d='M5 50 Q25 28 50 45' stroke='%23a0a0a0' stroke-width='3' fill='none'/%3E%3Cpath d='M18 56 Q38 38 60 52' stroke='%23b0b0b0' stroke-width='2.5' fill='none'/%3E%3C!-- Ala destra enorme --%3E%3Cpath d='M95 72 Q130 15 175 35 Q160 58 152 52 Q135 62 115 72 Z' fill='%23ffffff' stroke='%23d5d5d5' stroke-width='2'/%3E%3Cpath d='M155 40 Q172 24 180 40' stroke='%23909090' stroke-width='4' fill='none'/%3E%3Cpath d='M145 50 Q162 34 172 48' stroke='%23a0a0a0' stroke-width='3' fill='none'/%3E%3C!-- Coda --%3E%3Cpath d='M65 93 Q42 108 32 100 Q50 94 65 88 Z' fill='%23fcfcfc' stroke='%23e8e8e8' stroke-width='1'/%3E%3C!-- Piume corpo --%3E%3Cpath d='M90 82 Q108 72 120 82 Q132 72 150 82' stroke='%23e8e8e8' stroke-width='2.5' fill='none'/%3E%3Cpath d='M95 90 Q108 84 120 90 Q132 84 145 90' stroke='%23f0f0f0' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat center;
     background-size: contain;
     z-index: 9999;
-    animation: seagull-foreground 35s linear infinite, seagull-flap 0.9s ease-in-out infinite;
-    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.45));
+    animation: seagull-foreground 38s linear infinite, seagull-flap 1s ease-in-out infinite;
+    filter: drop-shadow(0 15px 35px rgba(0,0,0,0.55));
 }
 
 .seagull-foreground:nth-child(6) {
-    top: 18%;
-    width: 170px;
-    height: 102px;
-    animation-delay: 2s;
-    animation-duration: 32s;
+    top: 12%;
+    width: 280px;
+    height: 169px;
+    animation-delay: 1s;
+    animation-duration: 34s;
 }
 
 .seagull-foreground:nth-child(7) {
-    top: 25%;
-    width: 140px;
-    height: 84px;
-    animation-delay: 15s;
-    animation-duration: 38s;
+    top: 20%;
+    width: 240px;
+    height: 145px;
+    animation-delay: 12s;
+    animation-duration: 40s;
+}
+
+.seagull-foreground:nth-child(8) {
+    top: 8%;
+    width: 320px;
+    height: 193px;
+    animation-delay: 20s;
+    animation-duration: 35s;
 }
 
 @keyframes seagull-fly {
@@ -159,7 +167,7 @@ body::after {
 
 @keyframes seagull-foreground {
     0% {
-        transform: translateX(-170px) translateY(0) scale(0.9);
+        transform: translateX(-350px) translateY(0) scale(0.9);
         opacity: 0;
     }
     8% {
