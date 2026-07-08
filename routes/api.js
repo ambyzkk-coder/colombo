@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const petoiController = require('../petoi-controller');
 const siteData = require('../data/site-content');
+const { petoiEvents } = require('../server');
 
 router.get('/info', (req, res) => {
     res.json({
@@ -55,6 +56,16 @@ router.post('/petoi/command', (req, res) => {
         return res.status(400).json({ success: false, error: 'Comando richiesto' });
     }
     const result = petoiController.sendCommand(command);
+    
+    if (petoiEvents) {
+        petoiEvents.emit('command-executed', {
+            type: 'command',
+            command: command,
+            simulated: result.simulated || false,
+            timestamp: new Date().toISOString()
+        });
+    }
+    
     res.json(result);
 });
 
@@ -64,6 +75,16 @@ router.post('/petoi/action', (req, res) => {
         return res.status(400).json({ success: false, error: 'Azione richiesta' });
     }
     const result = petoiController.executeAction(action, params);
+    
+    if (petoiEvents) {
+        petoiEvents.emit('command-executed', {
+            type: 'command',
+            command: action,
+            simulated: result.simulated || false,
+            timestamp: new Date().toISOString()
+        });
+    }
+    
     res.json(result);
 });
 

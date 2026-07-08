@@ -1,5 +1,8 @@
 const SerialPort = require('serialport');
 const ReadlineParser = require('@serialport/parser-readline');
+const EventEmitter = require('events');
+
+const commandEvents = new EventEmitter();
 
 class PetoiController {
     constructor() {
@@ -42,6 +45,13 @@ class PetoiController {
     sendCommand(command) {
         if (!this.isConnected || !this.port) {
             console.log('Petoi non connesso - comando simulato:', command);
+            
+            commandEvents.emit('command', {
+                command,
+                simulated: true,
+                timestamp: new Date().toISOString()
+            });
+            
             return { success: false, message: 'Petoi non connesso', simulated: true, command };
         }
 
@@ -51,6 +61,12 @@ class PetoiController {
                 return { success: false, error: err.message };
             }
             console.log('Comando inviato:', command);
+            
+            commandEvents.emit('command', {
+                command,
+                simulated: false,
+                timestamp: new Date().toISOString()
+            });
         });
 
         return { success: true, command };
@@ -180,6 +196,11 @@ class PetoiController {
         }
         return { success: false, message: 'Nessuna simulazione attiva' };
     }
+    
+    getCommandEmitter() {
+        return commandEvents;
+    }
 }
 
 module.exports = new PetoiController();
+module.exports.commandEvents = commandEvents;

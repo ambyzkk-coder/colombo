@@ -26,10 +26,12 @@ app.get('/events', (req, res) => {
     
     petoiEvents.on('object-detected', sendEvent);
     petoiEvents.on('gallery-next', sendEvent);
+    petoiEvents.on('command-executed', sendEvent);
     
     req.on('close', () => {
         petoiEvents.off('object-detected', sendEvent);
         petoiEvents.off('gallery-next', sendEvent);
+        petoiEvents.off('command-executed', sendEvent);
     });
 });
 
@@ -58,6 +60,20 @@ app.post('/petoi/vision', (req, res) => {
         message: `Oggetto "${object}" rilevato`,
         action: 'gallery-advanced'
     });
+});
+
+app.post('/petoi/command-broadcast', (req, res) => {
+    const { command, action, source } = req.body;
+    
+    petoiEvents.emit('command-executed', {
+        type: 'command',
+        command,
+        action,
+        source: source || 'petoi',
+        timestamp: new Date().toISOString()
+    });
+    
+    res.json({ success: true });
 });
 
 app.get('/', (req, res) => {
@@ -98,3 +114,5 @@ app.get('/dashboard', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server avviato sulla porta ${PORT}`);
 });
+
+module.exports = { petoiEvents };
