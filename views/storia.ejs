@@ -178,8 +178,60 @@
                 });
             }
             
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #1a4a6e, #0d1b2a);
+                    color: white;
+                    padding: 20px 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+                    z-index: 9999;
+                    animation: slideIn 0.5s ease;
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.5s ease';
+                    setTimeout(() => notification.remove(), 500);
+                }, 3000);
+            }
+            
+            const eventSource = new EventSource('/events');
+            
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                
+                if (data.type === 'gallery-next') {
+                    changeSlide(1);
+                    showNotification(`Petoi ha visto: ${data.reason}`);
+                }
+                
+                if (data.type === 'object-detected') {
+                    console.log(`Oggetto rilevato: ${data.object}`);
+                }
+            };
+            
+            eventSource.onerror = () => {
+                console.log('Riconnessione in corso...');
+            };
+            
             updateGallery();
         </script>
+        <style>
+            @keyframes slideIn {
+                from { transform: translateX(400px); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(400px); opacity: 0; }
+            }
+        </style>
     </main>
     <footer>
         <p>Colombo App 2026</p>

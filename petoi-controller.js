@@ -132,6 +132,54 @@ class PetoiController {
             ]
         };
     }
+
+    detectObject(objectName, confidence = 90) {
+        console.log(`Visione attiva - Oggetto rilevato: ${objectName}`);
+        
+        const validObjects = ['nave', 'mare', 'oceano', 'colombo', 'america', 'nativo', 'scoglio'];
+        const normalizedObject = objectName.toLowerCase();
+        
+        if (!validObjects.includes(normalizedObject)) {
+            return { 
+                success: false, 
+                error: 'Oggetto non riconosciuto',
+                validObjects 
+            };
+        }
+
+        return {
+            success: true,
+            object: normalizedObject,
+            confidence,
+            action: 'gallery-advance',
+            timestamp: new Date().toISOString()
+        };
+    }
+
+    startVisionSimulation(intervalMs = 5000) {
+        const objects = ['nave', 'mare', 'oceano', 'colombo', 'america'];
+        let index = 0;
+        
+        console.log('Simulazione visione avviata');
+        
+        this.visionInterval = setInterval(() => {
+            const object = objects[index % objects.length];
+            this.detectObject(object);
+            index++;
+        }, intervalMs);
+        
+        return { success: true, message: 'Simulazione visione attiva' };
+    }
+
+    stopVisionSimulation() {
+        if (this.visionInterval) {
+            clearInterval(this.visionInterval);
+            this.visionInterval = null;
+            console.log('Simulazione visione fermata');
+            return { success: true, message: 'Simulazione visione fermata' };
+        }
+        return { success: false, message: 'Nessuna simulazione attiva' };
+    }
 }
 
 module.exports = new PetoiController();

@@ -146,6 +146,60 @@ async function syncContent(section) {
     }
 }
 
+async function petoiSees(object) {
+    log(`Petoi vede: ${object}`);
+    
+    try {
+        const response = await fetch('/petoi/vision', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ object, confidence: 95 })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            log(`✓ Oggetto "${object}" rilevato - Galleria avanza!`, 'success');
+        } else {
+            log(`✗ Errore: ${data.error}`, 'error');
+        }
+    } catch (error) {
+        log(`Errore: ${error.message}`, 'error');
+    }
+}
+
+async function startVisionSim() {
+    log('Avvio simulazione visione automatica...');
+    
+    try {
+        const response = await fetch(`${API_BASE}/petoi/vision/simulate/start`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ interval: 5000 })
+        });
+        
+        const data = await response.json();
+        log(data.message, 'success');
+    } catch (error) {
+        log(`Errore: ${error.message}`, 'error');
+    }
+}
+
+async function stopVisionSim() {
+    log('Fermando simulazione...');
+    
+    try {
+        const response = await fetch(`${API_BASE}/petoi/vision/simulate/stop`, {
+            method: 'POST'
+        });
+        
+        const data = await response.json();
+        log(data.message, 'info');
+    } catch (error) {
+        log(`Errore: ${error.message}`, 'error');
+    }
+}
+
 setInterval(checkStatus, 5000);
 
 checkStatus();

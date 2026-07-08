@@ -112,4 +112,26 @@ router.post('/petoi/sync-content', async (req, res) => {
     });
 });
 
+router.post('/petoi/vision/detect', (req, res) => {
+    const { object, confidence } = req.body;
+    
+    if (!object) {
+        return res.status(400).json({ success: false, error: 'Oggetto richiesto' });
+    }
+    
+    const result = petoiController.detectObject(object, confidence);
+    res.json(result);
+});
+
+router.post('/petoi/vision/simulate/start', (req, res) => {
+    const { interval } = req.body;
+    const result = petoiController.startVisionSimulation(interval);
+    res.json(result);
+});
+
+router.post('/petoi/vision/simulate/stop', (req, res) => {
+    const result = petoiController.stopVisionSimulation();
+    res.json(result);
+});
+
 module.exports = router;
