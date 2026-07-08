@@ -1,12 +1,13 @@
 (function() {
     const container = document.createElement('div');
     container.id = 'petoi-command-display';
+    container.style.display = 'none';
     container.innerHTML = `
         <style>
             #petoi-command-display {
                 position: fixed;
                 top: 70px;
-                right: 20px;
+                left: 20px;
                 width: 280px;
                 max-height: 400px;
                 background: linear-gradient(135deg, #0d1b2a 0%, #1a3a5c 100%);
@@ -16,6 +17,14 @@
                 z-index: 9998;
                 font-family: 'Segoe UI', Arial, sans-serif;
                 overflow: visible;
+                opacity: 0;
+                transform: translateX(-20px);
+                transition: opacity 0.5s ease, transform 0.5s ease;
+            }
+            
+            #petoi-command-display.visible {
+                opacity: 1;
+                transform: translateX(0);
             }
             
             .cmd-header {
@@ -102,7 +111,7 @@
             
             @keyframes slideInCmd {
                 0% { 
-                    transform: translateX(50px) scale(0.9); 
+                    transform: translateX(-50px) scale(0.9); 
                     opacity: 0; 
                 }
                 100% { 
@@ -142,6 +151,28 @@
     `;
     
     document.body.appendChild(container);
+    
+    const galleryContainer = document.querySelector('.gallery-container');
+    
+    if (galleryContainer) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    container.style.display = 'block';
+                    setTimeout(() => container.classList.add('visible'), 10);
+                } else {
+                    container.classList.remove('visible');
+                    setTimeout(() => {
+                        if (!container.classList.contains('visible')) {
+                            container.style.display = 'none';
+                        }
+                    }, 500);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        observer.observe(galleryContainer);
+    }
     
     const cmdList = document.getElementById('cmdList');
     const commands = [];

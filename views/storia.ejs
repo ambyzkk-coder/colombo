@@ -71,33 +71,14 @@
                 right: 50%;
                 margin-left: -50vw;
                 margin-right: -50vw;
-                overflow: visible;
-            }
-            
-            .gallery-container::before,
-            .gallery-container::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                width: 150px;
-                z-index: 5;
-                pointer-events: none;
-            }
-            
-            .gallery-container::before {
-                left: 0;
-                background: linear-gradient(to right, #0d1b2a 0%, transparent 100%);
-            }
-            
-            .gallery-container::after {
-                right: 0;
-                background: linear-gradient(to left, #0d1b2a 0%, transparent 100%);
+                overflow: hidden;
+                background: linear-gradient(180deg, #0d1b2a 0%, #1a3a5c 50%, #0d1b2a 100%);
             }
             
             .gallery-slides {
                 display: flex;
-                transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                will-change: transform;
             }
             
             .gallery-slide {
@@ -110,8 +91,40 @@
                 height: 100vh;
                 object-fit: cover;
                 display: block;
-                mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-                -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+                animation: waveFloat 20s ease-in-out infinite;
+            }
+            
+            @keyframes waveFloat {
+                0%, 100% { 
+                    transform: scale(1.05) translateY(0); 
+                }
+                50% { 
+                    transform: scale(1.08) translateY(-20px); 
+                }
+            }
+            
+            .gallery-container::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 200px;
+                background: linear-gradient(to bottom, #0d1b2a 0%, transparent 100%);
+                z-index: 2;
+                pointer-events: none;
+            }
+            
+            .gallery-container::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 250px;
+                background: linear-gradient(to top, #0d1b2a 0%, transparent 100%);
+                z-index: 2;
+                pointer-events: none;
             }
             
             .gallery-caption {
