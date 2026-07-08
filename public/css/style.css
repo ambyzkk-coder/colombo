@@ -48,80 +48,137 @@ body::after {
 
 .seagull {
     position: fixed;
-    width: 80px;
-    height: 50px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 100'%3E%3C!-- Corpo --%3E%3Cellipse cx='80' cy='60' rx='35' ry='18' fill='%23f5f5f5'/%3E%3C!-- Testa --%3E%3Ccircle cx='120' cy='50' r='12' fill='%23ffffff'/%3E%3C!-- Becco --%3E%3Cpath d='M132 48 L145 52 L132 56 Z' fill='%23ff9800'/%3E%3C!-- Occhio --%3E%3Ccircle cx='125' cy='48' r='2.5' fill='%23000000'/%3E%3C!-- Ala sinistra --%3E%3Cpath d='M50 58 Q20 35 5 50 Q15 55 20 52 Q30 58 45 60 Z' fill='%23e8e8e8'/%3E%3Cpath d='M25 52 Q15 48 10 50 Q15 53 22 54' stroke='%23d0d0d0' stroke-width='1.5' fill='none'/%3E%3C!-- Ala destra --%3E%3Cpath d='M70 45 Q90 20 110 30 Q100 40 95 38 Q85 42 75 48 Z' fill='%23f0f0f0'/%3E%3Cpath d='M95 35 Q100 30 105 32' stroke='%23d5d5d5' stroke-width='1.5' fill='none'/%3E%3C!-- Coda --%3E%3Cpath d='M45 62 Q35 68 30 65 Q38 62 45 60 Z' fill='%23e0e0e0'/%3E%3C!-- Ombra --%3E%3Cellipse cx='80' cy='75' rx='30' ry='5' fill='rgba(0,0,0,0.1)'/%3E%3C/svg%3E") no-repeat center;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 110'%3E%3C!-- Ombra corpo --%3E%3Cellipse cx='90' cy='70' rx='40' ry='12' fill='rgba(0,0, 0, 0.1)'/%3E%3C!-- Corpo principale --%3E%3Cellipse cx='90' cy='65' rx='38' ry='20' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='0.5'/%3E%3C!-- Testa --%3E%3Ccircle cx='140' cy='55' r='14' fill='%23ffffff' stroke='%23e8e8e8' stroke-width='0.5'/%3E%3C!-- Becco arancione --%3E%3Cpath d='M154 52 L170 56 L154 60 Z' fill='%23ff9800' stroke='%23e68a00' stroke-width='0.5'/%3E%3C!-- Occhio nero --%3E%3Ccircle cx='145' cy='52' r='3' fill='%23000000'/%3E%3Ccircle cx='144' cy='51' r='1' fill='%23ffffff'/%3E%3C!-- Ala sinistra spiegata --%3E%3Cpath d='M55 65 Q25 30 8 45 Q12 50 18 48 Q28 55 40 62 Q50 68 60 70 Z' fill='%23ffffff' stroke='%23d8d8d8' stroke-width='1'/%3E%3C!-- Piume ala sinistra --%3E%3Cpath d='M15 48 Q22 40 30 45' stroke='%23c8c8c8' stroke-width='2' fill='none'/%3E%3Cpath d='M20 50 Q28 42 38 48' stroke='%23d0d0d0' stroke-width='1.5' fill='none'/%3E%3C!-- Ala destra --%3E%3Cpath d='M75 55 Q95 25 125 35 Q115 45 110 42 Q100 48 90 55 Z' fill='%23ffffff' stroke='%23d8d8d8' stroke-width='1'/%3E%3C!-- Piume ala destra --%3E%3Cpath d='M110 38 Q118 32 120 37' stroke='%23c8c8c8' stroke-width='2' fill='none'/%3E%3C!-- Coda --%3E%3Cpath d='M52 68 Q40 75 35 70 Q45 67 52 65 Z' fill='%23f8f8f8' stroke='%23e0e0e0' stroke-width='0.5'/%3E%3C!-- Dettagli piume corpo --%3E%3Cpath d='M70 60 Q80 55 90 60 Q100 55 110 60' stroke='%23f0f0f0' stroke-width='1' fill='none'/%3E%3C/svg%3E") no-repeat center;
     background-size: contain;
     z-index: 1;
-    animation: seagull-fly 20s linear infinite, seagull-flap 0.8s ease-in-out infinite;
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+    animation: seagull-fly 22s linear infinite, seagull-flap 1s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
 }
 
 @keyframes seagull-flap {
-    0%, 100% { transform: scaleY(1); }
-    50% { transform: scaleY(0.85); }
+    0%, 100% { transform: scaleY(1) rotate(0deg); }
+    25% { transform: scaleY(0.92) rotate(1deg); }
+    50% { transform: scaleY(0.88) rotate(0deg); }
+    75% { transform: scaleY(0.92) rotate(-1deg); }
 }
 
 .seagull:nth-child(1) {
-    top: 15%;
-    left: -80px;
+    top: 12%;
+    left: -100px;
+    width: 95px;
+    height: 58px;
     animation-delay: 0s;
-    animation-duration: 18s;
+    animation-duration: 20s;
 }
 
 .seagull:nth-child(2) {
-    top: 25%;
-    left: -80px;
-    animation-delay: 5s;
-    animation-duration: 22s;
-    width: 70px;
-    height: 44px;
-    opacity: 0.85;
-}
-
-.seagull:nth-child(3) {
-    top: 10%;
-    left: -80px;
-    animation-delay: 10s;
-    animation-duration: 25s;
-    width: 90px;
-    height: 56px;
-}
-
-.seagull:nth-child(4) {
-    top: 20%;
-    left: -80px;
-    animation-delay: 15s;
-    animation-duration: 20s;
-    width: 75px;
-    height: 47px;
+    top: 28%;
+    left: -100px;
+    width: 60px;
+    height: 37px;
+    animation-delay: 4s;
+    animation-duration: 26s;
     opacity: 0.75;
 }
 
+.seagull:nth-child(3) {
+    top: 8%;
+    left: -100px;
+    width: 110px;
+    height: 67px;
+    animation-delay: 9s;
+    animation-duration: 28s;
+}
+
+.seagull:nth-child(4) {
+    top: 22%;
+    left: -100px;
+    width: 70px;
+    height: 43px;
+    animation-delay: 14s;
+    animation-duration: 23s;
+    opacity: 0.8;
+}
+
 .seagull:nth-child(5) {
-    top: 30%;
-    left: -80px;
-    animation-delay: 8s;
-    animation-duration: 24s;
-    width: 85px;
-    height: 53px;
+    top: 35%;
+    left: -100px;
+    width: 50px;
+    height: 31px;
+    animation-delay: 7s;
+    animation-duration: 30s;
+    opacity: 0.65;
+}
+
+.seagull-foreground {
+    position: fixed;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120'%3E%3C!-- Ombra --%3E%3Cellipse cx='100' cy='80' rx='50' ry='15' fill='rgba(0, 0, 0, 0.15)'/%3E%3C!-- Corpo grande --%3E%3Cellipse cx='100' cy='75' rx='45' ry='24' fill='%23ffffff' stroke='%23e8e8e8' stroke-width='1'/%3E%3C!-- Testa --%3E%3Ccircle cx='158' cy='62' r='17' fill='%23ffffff' stroke='%23e8e8e8' stroke-width='0.5'/%3E%3C!-- Becco --%3E%3Cpath d='M175 58 L195 63 L175 68 Z' fill='%23ffa726' stroke='%23fb8c00' stroke-width='1'/%3E%3C!-- Occhio --%3E%3Ccircle cx='163' cy='60' r='4' fill='%23000000'/%3E%3Ccircle cx='162' cy='59' r='1.5' fill='%23ffffff'/%3E%3C!-- Ala sinistra grande --%3E%3Cpath d='M60 75 Q20 20 -5 40 Q5 55 15 50 Q30 60 50 72 Z' fill='%23ffffff' stroke='%23d8d8d8' stroke-width='1.5'/%3E%3Cpath d='M5 45 Q15 32 28 40' stroke='%23b0b0b0' stroke-width='2.5' fill='none'/%3E%3Cpath d='M12 48 Q22 35 38 45' stroke='%23c0c0c0' stroke-width='2' fill='none'/%3E%3C!-- Ala destra --%3E%3Cpath d='M85 60 Q110 20 145 35 Q135 50 130 46 Q115 55 100 62 Z' fill='%23ffffff' stroke='%23d8d8d8' stroke-width='1.5'/%3E%3Cpath d='M130 40 Q142 32 148 38' stroke='%23b0b0b0' stroke-width='2.5' fill='none'/%3E%3C!-- Coda --%3E%3Cpath d='M55 78 Q38 88 32 82 Q45 77 55 73 Z' fill='%23fafafa' stroke='%23e0e0e0' stroke-width='0.5'/%3E%3C!-- Piume corpo --%3E%3Cpath d='M75 70 Q90 62 100 70 Q110 62 125 70' stroke='%23f5f5f5' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat center;
+    background-size: contain;
+    z-index: 9999;
+    animation: seagull-foreground 35s linear infinite, seagull-flap 0.9s ease-in-out infinite;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.45));
+}
+
+.seagull-foreground:nth-child(6) {
+    top: 18%;
+    width: 170px;
+    height: 102px;
+    animation-delay: 2s;
+    animation-duration: 32s;
+}
+
+.seagull-foreground:nth-child(7) {
+    top: 25%;
+    width: 140px;
+    height: 84px;
+    animation-delay: 15s;
+    animation-duration: 38s;
 }
 
 @keyframes seagull-fly {
     0% {
         transform: translateX(0) translateY(0);
     }
-    25% {
-        transform: translateX(25vw) translateY(-15px);
+    20% {
+        transform: translateX(20vw) translateY(-25px);
     }
-    50% {
-        transform: translateX(50vw) translateY(10px);
+    40% {
+        transform: translateX(40vw) translateY(20px);
     }
-    75% {
-        transform: translateX(75vw) translateY(-20px);
+    60% {
+        transform: translateX(60vw) translateY(-30px);
+    }
+    80% {
+        transform: translateX(80vw) translateY(15px);
     }
     100% {
-        transform: translateX(110vw) translateY(5px);
+        transform: translateX(115vw) translateY(-10px);
+    }
+}
+
+@keyframes seagull-foreground {
+    0% {
+        transform: translateX(-170px) translateY(0) scale(0.9);
+        opacity: 0;
+    }
+    8% {
+        opacity: 1;
+    }
+    25% {
+        transform: translateX(25vw) translateY(-50px) scale(1.05);
+    }
+    50% {
+        transform: translateX(55vw) translateY(40px) scale(1);
+    }
+    75% {
+        transform: translateX(80vw) translateY(-45px) scale(1.03);
+    }
+    92% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(115vw) translateY(25px) scale(1);
+        opacity: 0;
     }
 }
 
