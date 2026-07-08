@@ -12,10 +12,10 @@
                 background: linear-gradient(135deg, #0d1b2a 0%, #1a3a5c 100%);
                 border-radius: 12px;
                 padding: 15px;
-                box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.5);
                 z-index: 9998;
                 font-family: 'Segoe UI', Arial, sans-serif;
-                overflow: hidden;
+                overflow: visible;
             }
             
             .cmd-header {
@@ -39,17 +39,19 @@
                 height: 10px;
                 border-radius: 50%;
                 background: #44ff44;
-                animation: pulse-cmd 2s infinite;
+                animation: pulse-cmd 2s infinite ease-in-out;
             }
             
             @keyframes pulse-cmd {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.5; }
+                0%, 100% { opacity: 1; transform: scale(1); }
+                50% { opacity: 0.6; transform: scale(1.1); }
             }
             
             .cmd-list {
                 max-height: 320px;
                 overflow-y: auto;
+                overflow-x: hidden;
+                padding-right: 5px;
             }
             
             .cmd-item {
@@ -57,8 +59,10 @@
                 border-radius: 8px;
                 padding: 10px;
                 margin-bottom: 8px;
-                animation: slideInCmd 0.3s ease;
+                animation: slideInCmd 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                 border-left: 3px solid #4a90d9;
+                transform-origin: top right;
+                opacity: 1;
             }
             
             .cmd-item.simulated {
@@ -97,8 +101,14 @@
             }
             
             @keyframes slideInCmd {
-                from { transform: translateX(100px); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
+                0% { 
+                    transform: translateX(50px) scale(0.9); 
+                    opacity: 0; 
+                }
+                100% { 
+                    transform: translateX(0) scale(1); 
+                    opacity: 1; 
+                }
             }
             
             .cmd-empty {
