@@ -139,7 +139,7 @@
         const startX = 10 + Math.random() * 80;
         const size = 25 + Math.random() * 20;
         const jumpHeight = 120 + Math.random() * 100;
-        const jumpDistance = 80 + Math.random() * 120;
+        const jumpDistance = -(80 + Math.random() * 120);
         const duration = 1.8 + Math.random() * 0.8;
         
         const fishColors = [
@@ -183,11 +183,11 @@
         
         fish.animate([
             { 
-                transform: `translate(0, 0) rotate(-45deg)`,
+                transform: `translate(0, 0) rotate(45deg)`,
                 opacity: 0
             },
             {
-                transform: `translate(${jumpDistance * 0.2}px, -${jumpHeight * 0.5}px) rotate(-20deg)`,
+                transform: `translate(${jumpDistance * 0.2}px, -${jumpHeight * 0.5}px) rotate(20deg)`,
                 opacity: 1,
                 offset: 0.15
             },
@@ -197,17 +197,17 @@
                 offset: 0.4
             },
             {
-                transform: `translate(${jumpDistance * 0.75}px, -${jumpHeight * 0.65}px) rotate(15deg)`,
+                transform: `translate(${jumpDistance * 0.75}px, -${jumpHeight * 0.65}px) rotate(-15deg)`,
                 opacity: 1,
                 offset: 0.6
             },
             {
-                transform: `translate(${jumpDistance * 0.9}px, -${jumpHeight * 0.25}px) rotate(35deg)`,
+                transform: `translate(${jumpDistance * 0.9}px, -${jumpHeight * 0.25}px) rotate(-35deg)`,
                 opacity: 0.8,
                 offset: 0.8
             },
             { 
-                transform: `translate(${jumpDistance}px, 0) rotate(45deg)`,
+                transform: `translate(${jumpDistance}px, 0) rotate(-45deg)`,
                 opacity: 0
             }
         ], {
@@ -281,12 +281,6 @@
             createFish();
         }
     }, 4000);
-    
-    for (let i = 0; i < 5; i++) {
-        const seagull = document.createElement('div');
-        seagull.className = 'seagull';
-        document.body.appendChild(seagull);
-    }
     
     const style = document.createElement('style');
     style.textContent = `
