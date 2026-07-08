@@ -24,6 +24,33 @@
         opacity: 0.9;
     `;
     
+    const splash1 = document.createElement('div');
+    splash1.className = 'splash';
+    splash1.style.cssText = `
+        position: absolute;
+        bottom: 95px;
+        left: calc(12% + 60px);
+        width: 60px;
+        height: 60px;
+        background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 30%, transparent 70%);
+        border-radius: 50%;
+        animation: splash-wave 2s ease-in-out infinite;
+        filter: blur(2px);
+    `;
+    
+    const foam1 = document.createElement('div');
+    foam1.style.cssText = `
+        position: absolute;
+        bottom: 90px;
+        left: calc(12% + 30px);
+        width: 80px;
+        height: 25px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6) 20%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.6) 80%, transparent);
+        border-radius: 50%;
+        filter: blur(3px);
+        animation: foam-move 3s ease-in-out infinite;
+    `;
+    
     const rock2 = document.createElement('div');
     rock2.style.cssText = `
         position: absolute;
@@ -37,7 +64,79 @@
         opacity: 0.9;
     `;
     
+    const splash2 = document.createElement('div');
+    splash2.className = 'splash';
+    splash2.style.cssText = `
+        position: absolute;
+        bottom: 65px;
+        right: calc(18% + 40px);
+        width: 50px;
+        height: 50px;
+        background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 30%, transparent 70%);
+        border-radius: 50%;
+        animation: splash-wave 2.5s ease-in-out infinite;
+        animation-delay: 0.5s;
+        filter: blur(2px);
+    `;
+    
+    const foam2 = document.createElement('div');
+    foam2.style.cssText = `
+        position: absolute;
+        bottom: 60px;
+        right: calc(18% + 20px);
+        width: 70px;
+        height: 20px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6) 20%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.6) 80%, transparent);
+        border-radius: 50%;
+        filter: blur(3px);
+        animation: foam-move 3.5s ease-in-out infinite;
+        animation-delay: 0.3s;
+    `;
+    
     rocks.appendChild(rock1);
+    rocks.appendChild(splash1);
+    rocks.appendChild(foam1);
     rocks.appendChild(rock2);
+    rocks.appendChild(splash2);
+    rocks.appendChild(foam2);
     document.body.appendChild(rocks);
+    
+    const seagulls = document.createElement('div');
+    seagulls.className = 'seagulls';
+    
+    for (let i = 0; i < 5; i++) {
+        const seagull = document.createElement('div');
+        seagull.className = 'seagull';
+        seagulls.appendChild(seagull);
+    }
+    
+    document.body.appendChild(seagulls);
+    
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes splash-wave {
+            0%, 100% { 
+                transform: scale(0.8) translateY(0); 
+                opacity: 0.6;
+            }
+            50% { 
+                transform: scale(1.3) translateY(-15px); 
+                opacity: 0.9;
+            }
+        }
+        
+        @keyframes foam-move {
+            0%, 100% { 
+                transform: translateX(0) scaleX(1); 
+                opacity: 0.7;
+            }
+            50% { 
+                transform: translateX(10px) scaleX(1.2); 
+                opacity: 0.9;
+            }
+        }
+    `;
+    document.head.appendChild(style);
 })();
+
+
