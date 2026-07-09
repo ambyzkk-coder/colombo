@@ -1182,6 +1182,8 @@
                 }, 3000);
             }
             
+            let currentThoughtId = null;
+            
             function loadLatestThought() {
                 fetch('/api/thoughts/latest')
                     .then(res => res.json())
@@ -1190,6 +1192,7 @@
                             const thoughtDiv = document.getElementById('petoi-thought');
                             const thoughtText = document.getElementById('petoi-thought-text');
                             if (thoughtText && result.data.thought) {
+                                currentThoughtId = result.data.id;
                                 thoughtText.textContent = `"${result.data.thought}"`;
                                 thoughtDiv.style.opacity = '1';
                                 thoughtDiv.style.transform = 'translateY(0)';
@@ -1198,6 +1201,20 @@
                     })
                     .catch(err => console.log('Errore caricamento pensiero:', err));
             }
+            
+            function checkForNewThoughts() {
+                fetch('/api/thoughts/latest')
+                    .then(res => res.json())
+                    .then(result => {
+                        if (result.success && result.data && result.data.id !== currentThoughtId) {
+                            updateThought(result.data.thought);
+                            currentThoughtId = result.data.id;
+                        }
+                    })
+                    .catch(err => console.log('Errore polling pensiero:', err));
+            }
+            
+            setInterval(checkForNewThoughts, 3000);
             
             function updateThought(thought) {
                 const thoughtDiv = document.getElementById('petoi-thought');
