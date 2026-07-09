@@ -42,6 +42,16 @@
                     <img src="/mappa3.jpg" alt="Mappa del mondo">
                     <div class="gallery-caption">Il mondo conosciuto nel XV secolo</div>
                     <button class="fullscreen-btn" onclick="openFullscreen(0)" title="Schermo intero">&#x26F6;</button>
+                    <div class="mappa-music-overlay">
+                        <iframe id="mappa-music" width="1" height="1" 
+                            src="" 
+                            data-src="https://www.youtube.com/embed/ZOsQ6Ckx5Cw?start=1005&autoplay=1" 
+                            title="Musica Mappa" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
                 </div>
                 <div class="gallery-slide">
                     <img src="/scogli.jpg" alt="Scogli sul mare">
@@ -50,7 +60,7 @@
                     <div class="scogli-music-overlay">
                         <iframe id="scogli-music" width="1" height="1" 
                             src="" 
-                            data-src="https://www.youtube.com/embed/Tjp8cj8Vzyo?autoplay=1" 
+                            data-src="https://www.youtube.com/embed/Tjp8cj8Vzyo?start=70&autoplay=1" 
                             title="Musica Mare" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -62,6 +72,16 @@
                     <img src="/terraa.webp" alt="Terra in vista">
                     <div class="gallery-caption">Terra in vista - L'arrivo nel Nuovo Mondo</div>
                     <button class="fullscreen-btn" onclick="openFullscreen(2)" title="Schermo intero">&#x26F6;</button>
+                    <div class="terra-music-overlay">
+                        <iframe id="terra-music" width="1" height="1" 
+                            src="" 
+                            data-src="https://www.youtube.com/embed/O8Fx11GO24c?autoplay=1" 
+                            title="Musica Terra" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
                 </div>
                 <div class="gallery-slide">
                     <img src="/indiani.jpg" alt="Accampamento indiani">
@@ -272,6 +292,42 @@
                 width: 1px;
                 height: 1px;
             }
+            
+            .mappa-music-overlay {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                z-index: 20;
+                opacity: 0;
+                pointer-events: none;
+            }
+            
+            .mappa-music-overlay.visible {
+                opacity: 0;
+            }
+            
+            .mappa-music-overlay iframe {
+                width: 1px;
+                height: 1px;
+            }
+            
+            .terra-music-overlay {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                z-index: 20;
+                opacity: 0;
+                pointer-events: none;
+            }
+            
+            .terra-music-overlay.visible {
+                opacity: 0;
+            }
+            
+            .terra-music-overlay iframe {
+                width: 1px;
+                height: 1px;
+            }
         </style>
         
         <script>
@@ -302,7 +358,21 @@
                     dot.classList.toggle('active', index === currentSlide);
                 });
                 
-                // Gestione musica
+                // Gestione musica per tutte le slide
+                const mappaMusicOverlay = document.querySelector('.mappa-music-overlay');
+                const mappaMusicIframe = document.getElementById('mappa-music');
+                
+                if (mappaMusicOverlay && mappaMusicIframe) {
+                    if (currentSlide === 0) {
+                        mappaMusicOverlay.classList.add('visible');
+                        if (!mappaMusicIframe.src || mappaMusicIframe.src === '' || mappaMusicIframe.src === 'about:blank') {
+                            mappaMusicIframe.src = mappaMusicIframe.dataset.src;
+                        }
+                    } else {
+                        mappaMusicOverlay.classList.remove('visible');
+                    }
+                }
+                
                 const scogliMusicOverlay = document.querySelector('.scogli-music-overlay');
                 const scogliMusicIframe = document.getElementById('scogli-music');
                 
@@ -314,6 +384,20 @@
                         }
                     } else {
                         scogliMusicOverlay.classList.remove('visible');
+                    }
+                }
+                
+                const terraMusicOverlay = document.querySelector('.terra-music-overlay');
+                const terraMusicIframe = document.getElementById('terra-music');
+                
+                if (terraMusicOverlay && terraMusicIframe) {
+                    if (currentSlide === 2) {
+                        terraMusicOverlay.classList.add('visible');
+                        if (!terraMusicIframe.src || terraMusicIframe.src === '' || terraMusicIframe.src === 'about:blank') {
+                            terraMusicIframe.src = terraMusicIframe.dataset.src;
+                        }
+                    } else {
+                        terraMusicOverlay.classList.remove('visible');
                     }
                 }
                 
@@ -465,9 +549,29 @@
                     overlay.appendChild(clonedPetoiBox);
                 }
                 
-                // Aggiungi musica per slide indiani (nascosta, solo audio)
+                // Aggiungi musica per tutte le slide (nascosta, solo audio)
                 let fullscreenMusic = null;
-                if (currentIndex === 1) {
+                if (currentIndex === 0) {
+                    // Musica per mappa
+                    fullscreenMusic = document.createElement('div');
+                    fullscreenMusic.style.cssText = `
+                        position: absolute;
+                        width: 1px;
+                        height: 1px;
+                        opacity: 0;
+                        pointer-events: none;
+                    `;
+                    fullscreenMusic.innerHTML = `
+                        <iframe width="1" height="1" 
+                            src="https://www.youtube.com/embed/ZOsQ6Ckx5Cw?start=1005&autoplay=1" 
+                            title="Musica Mappa" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    `;
+                    overlay.appendChild(fullscreenMusic);
+                } else if (currentIndex === 1) {
                     // Musica per scogli
                     fullscreenMusic = document.createElement('div');
                     fullscreenMusic.style.cssText = `
@@ -479,8 +583,28 @@
                     `;
                     fullscreenMusic.innerHTML = `
                         <iframe width="1" height="1" 
-                            src="https://www.youtube.com/embed/Tjp8cj8Vzyo?autoplay=1" 
+                            src="https://www.youtube.com/embed/Tjp8cj8Vzyo?start=70&autoplay=1" 
                             title="Musica Mare" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    `;
+                    overlay.appendChild(fullscreenMusic);
+                } else if (currentIndex === 2) {
+                    // Musica per terra
+                    fullscreenMusic = document.createElement('div');
+                    fullscreenMusic.style.cssText = `
+                        position: absolute;
+                        width: 1px;
+                        height: 1px;
+                        opacity: 0;
+                        pointer-events: none;
+                    `;
+                    fullscreenMusic.innerHTML = `
+                        <iframe width="1" height="1" 
+                            src="https://www.youtube.com/embed/O8Fx11GO24c?autoplay=1" 
+                            title="Musica Terra" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen>
@@ -632,7 +756,27 @@
                         fullscreenMusic.remove();
                         fullscreenMusic = null;
                     }
-                    if (currentIndex === 1) {
+                    if (currentIndex === 0) {
+                        // Musica per mappa
+                        fullscreenMusic = document.createElement('div');
+                        fullscreenMusic.style.cssText = `
+                            position: absolute;
+                            width: 1px;
+                            height: 1px;
+                            opacity: 0;
+                            pointer-events: none;
+                        `;
+                        fullscreenMusic.innerHTML = `
+                            <iframe width="1" height="1" 
+                                src="https://www.youtube.com/embed/ZOsQ6Ckx5Cw?start=1005&autoplay=1" 
+                                title="Musica Mappa" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        `;
+                        overlay.appendChild(fullscreenMusic);
+                    } else if (currentIndex === 1) {
                         // Musica per scogli
                         fullscreenMusic = document.createElement('div');
                         fullscreenMusic.style.cssText = `
@@ -644,8 +788,28 @@
                         `;
                         fullscreenMusic.innerHTML = `
                             <iframe width="1" height="1" 
-                                src="https://www.youtube.com/embed/Tjp8cj8Vzyo?autoplay=1" 
+                                src="https://www.youtube.com/embed/Tjp8cj8Vzyo?start=70&autoplay=1" 
                                 title="Musica Mare" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        `;
+                        overlay.appendChild(fullscreenMusic);
+                    } else if (currentIndex === 2) {
+                        // Musica per terra
+                        fullscreenMusic = document.createElement('div');
+                        fullscreenMusic.style.cssText = `
+                            position: absolute;
+                            width: 1px;
+                            height: 1px;
+                            opacity: 0;
+                            pointer-events: none;
+                        `;
+                        fullscreenMusic.innerHTML = `
+                            <iframe width="1" height="1" 
+                                src="https://www.youtube.com/embed/O8Fx11GO24c?autoplay=1" 
+                                title="Musica Terra" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen>
@@ -705,7 +869,27 @@
                         fullscreenMusic.remove();
                         fullscreenMusic = null;
                     }
-                    if (currentIndex === 1) {
+                    if (currentIndex === 0) {
+                        // Musica per mappa
+                        fullscreenMusic = document.createElement('div');
+                        fullscreenMusic.style.cssText = `
+                            position: absolute;
+                            width: 1px;
+                            height: 1px;
+                            opacity: 0;
+                            pointer-events: none;
+                        `;
+                        fullscreenMusic.innerHTML = `
+                            <iframe width="1" height="1" 
+                                src="https://www.youtube.com/embed/ZOsQ6Ckx5Cw?start=1005&autoplay=1" 
+                                title="Musica Mappa" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        `;
+                        overlay.appendChild(fullscreenMusic);
+                    } else if (currentIndex === 1) {
                         // Musica per scogli
                         fullscreenMusic = document.createElement('div');
                         fullscreenMusic.style.cssText = `
@@ -717,8 +901,28 @@
                         `;
                         fullscreenMusic.innerHTML = `
                             <iframe width="1" height="1" 
-                                src="https://www.youtube.com/embed/Tjp8cj8Vzyo?autoplay=1" 
+                                src="https://www.youtube.com/embed/Tjp8cj8Vzyo?start=70&autoplay=1" 
                                 title="Musica Mare" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        `;
+                        overlay.appendChild(fullscreenMusic);
+                    } else if (currentIndex === 2) {
+                        // Musica per terra
+                        fullscreenMusic = document.createElement('div');
+                        fullscreenMusic.style.cssText = `
+                            position: absolute;
+                            width: 1px;
+                            height: 1px;
+                            opacity: 0;
+                            pointer-events: none;
+                        `;
+                        fullscreenMusic.innerHTML = `
+                            <iframe width="1" height="1" 
+                                src="https://www.youtube.com/embed/O8Fx11GO24c?autoplay=1" 
+                                title="Musica Terra" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                 allowfullscreen>
@@ -773,22 +977,79 @@
                             fullscreenMusic.remove();
                             fullscreenMusic = null;
                         }
-                        if (currentIndex === 3) {
+                        if (currentIndex === 0) {
                             fullscreenMusic = document.createElement('div');
                             fullscreenMusic.style.cssText = `
                                 position: absolute;
-                                bottom: 150px;
-                                right: 30px;
-                                z-index: 10002;
+                                width: 1px;
+                                height: 1px;
+                                opacity: 0;
+                                pointer-events: none;
                             `;
                             fullscreenMusic.innerHTML = `
-                                <iframe width="300" height="80" 
+                                <iframe width="1" height="1" 
+                                    src="https://www.youtube.com/embed/ZOsQ6Ckx5Cw?start=1005&autoplay=1" 
+                                    title="Musica Mappa" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                                </iframe>
+                            `;
+                            overlay.appendChild(fullscreenMusic);
+                        } else if (currentIndex === 1) {
+                            fullscreenMusic = document.createElement('div');
+                            fullscreenMusic.style.cssText = `
+                                position: absolute;
+                                width: 1px;
+                                height: 1px;
+                                opacity: 0;
+                                pointer-events: none;
+                            `;
+                            fullscreenMusic.innerHTML = `
+                                <iframe width="1" height="1" 
+                                    src="https://www.youtube.com/embed/Tjp8cj8Vzyo?start=70&autoplay=1" 
+                                    title="Musica Mare" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                                </iframe>
+                            `;
+                            overlay.appendChild(fullscreenMusic);
+                        } else if (currentIndex === 2) {
+                            fullscreenMusic = document.createElement('div');
+                            fullscreenMusic.style.cssText = `
+                                position: absolute;
+                                width: 1px;
+                                height: 1px;
+                                opacity: 0;
+                                pointer-events: none;
+                            `;
+                            fullscreenMusic.innerHTML = `
+                                <iframe width="1" height="1" 
+                                    src="https://www.youtube.com/embed/O8Fx11GO24c?autoplay=1" 
+                                    title="Musica Terra" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                                </iframe>
+                            `;
+                            overlay.appendChild(fullscreenMusic);
+                        } else if (currentIndex === 3) {
+                            fullscreenMusic = document.createElement('div');
+                            fullscreenMusic.style.cssText = `
+                                position: absolute;
+                                width: 1px;
+                                height: 1px;
+                                opacity: 0;
+                                pointer-events: none;
+                            `;
+                            fullscreenMusic.innerHTML = `
+                                <iframe width="1" height="1" 
                                     src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
                                     title="Musica Nativi Americani" 
                                     frameborder="0" 
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen
-                                    style="border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                                    allowfullscreen>
                                 </iframe>
                             `;
                             overlay.appendChild(fullscreenMusic);
@@ -803,22 +1064,79 @@
                             fullscreenMusic.remove();
                             fullscreenMusic = null;
                         }
-                        if (currentIndex === 3) {
+                        if (currentIndex === 0) {
                             fullscreenMusic = document.createElement('div');
                             fullscreenMusic.style.cssText = `
                                 position: absolute;
-                                bottom: 150px;
-                                right: 30px;
-                                z-index: 10002;
+                                width: 1px;
+                                height: 1px;
+                                opacity: 0;
+                                pointer-events: none;
                             `;
                             fullscreenMusic.innerHTML = `
-                                <iframe width="300" height="80" 
+                                <iframe width="1" height="1" 
+                                    src="https://www.youtube.com/embed/ZOsQ6Ckx5Cw?start=1005&autoplay=1" 
+                                    title="Musica Mappa" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                                </iframe>
+                            `;
+                            overlay.appendChild(fullscreenMusic);
+                        } else if (currentIndex === 1) {
+                            fullscreenMusic = document.createElement('div');
+                            fullscreenMusic.style.cssText = `
+                                position: absolute;
+                                width: 1px;
+                                height: 1px;
+                                opacity: 0;
+                                pointer-events: none;
+                            `;
+                            fullscreenMusic.innerHTML = `
+                                <iframe width="1" height="1" 
+                                    src="https://www.youtube.com/embed/Tjp8cj8Vzyo?start=70&autoplay=1" 
+                                    title="Musica Mare" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                                </iframe>
+                            `;
+                            overlay.appendChild(fullscreenMusic);
+                        } else if (currentIndex === 2) {
+                            fullscreenMusic = document.createElement('div');
+                            fullscreenMusic.style.cssText = `
+                                position: absolute;
+                                width: 1px;
+                                height: 1px;
+                                opacity: 0;
+                                pointer-events: none;
+                            `;
+                            fullscreenMusic.innerHTML = `
+                                <iframe width="1" height="1" 
+                                    src="https://www.youtube.com/embed/O8Fx11GO24c?autoplay=1" 
+                                    title="Musica Terra" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen>
+                                </iframe>
+                            `;
+                            overlay.appendChild(fullscreenMusic);
+                        } else if (currentIndex === 3) {
+                            fullscreenMusic = document.createElement('div');
+                            fullscreenMusic.style.cssText = `
+                                position: absolute;
+                                width: 1px;
+                                height: 1px;
+                                opacity: 0;
+                                pointer-events: none;
+                            `;
+                            fullscreenMusic.innerHTML = `
+                                <iframe width="1" height="1" 
                                     src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
                                     title="Musica Nativi Americani" 
                                     frameborder="0" 
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen
-                                    style="border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                                    allowfullscreen>
                                 </iframe>
                             `;
                             overlay.appendChild(fullscreenMusic);
