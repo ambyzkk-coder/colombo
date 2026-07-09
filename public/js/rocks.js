@@ -223,6 +223,54 @@
             });
         }, 50);
         
+        for (let i = 0; i < 8; i++) {
+            const droplet = document.createElement('div');
+            const offsetX = (Math.random() - 0.5) * 40;
+            const size = 4 + Math.random() * 6;
+            const animDuration = 600 + Math.random() * 400;
+            
+            droplet.style.cssText = `
+                position: absolute;
+                bottom: 0;
+                left: calc(${startX}% + ${size/2}px + ${offsetX}px);
+                width: ${size}px;
+                height: ${size * 1.3}px;
+                background: linear-gradient(to top, rgba(150, 200, 255, 0.7), rgba(255, 255, 255, 0.9));
+                border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+                opacity: 0;
+                pointer-events: none;
+            `;
+            fishContainer.appendChild(droplet);
+            
+            setTimeout(() => {
+                droplet.animate([
+                    { 
+                        transform: 'translateY(0) scale(0.5)', 
+                        opacity: 0 
+                    },
+                    { 
+                        transform: `translateY(-${40 + Math.random() * 30}px) translateX(${offsetX * 0.5}px) scale(1)`, 
+                        opacity: 0.9,
+                        offset: 0.4
+                    },
+                    { 
+                        transform: `translateY(${20 + Math.random() * 20}px) translateX(${offsetX * 0.8}px) scale(0.6)`, 
+                        opacity: 0.4,
+                        offset: 0.8
+                    },
+                    { 
+                        transform: `translateY(${40 + Math.random() * 20}px) translateX(${offsetX}px) scale(0.3)`, 
+                        opacity: 0 
+                    }
+                ], {
+                    duration: animDuration,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                });
+            }, 50 + i * 30);
+            
+            setTimeout(() => droplet.remove(), animDuration + 200);
+        }
+        
         const splashEnd = document.createElement('div');
         splashEnd.style.cssText = `
             position: absolute;
@@ -245,6 +293,54 @@
                 easing: 'ease-out'
             });
         }, duration * 1000 - 50);
+        
+        for (let i = 0; i < 8; i++) {
+            const droplet = document.createElement('div');
+            const offsetX = (Math.random() - 0.5) * 50;
+            const size = 4 + Math.random() * 6;
+            const animDuration = 700 + Math.random() * 400;
+            
+            droplet.style.cssText = `
+                position: absolute;
+                bottom: 0;
+                left: calc(${startX}% + ${jumpDistance}px + ${size/2}px + ${offsetX}px);
+                width: ${size}px;
+                height: ${size * 1.3}px;
+                background: linear-gradient(to top, rgba(150, 200, 255, 0.7), rgba(255, 255, 255, 0.9));
+                border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+                opacity: 0;
+                pointer-events: none;
+            `;
+            fishContainer.appendChild(droplet);
+            
+            setTimeout(() => {
+                droplet.animate([
+                    { 
+                        transform: 'translateY(0) scale(0.5)', 
+                        opacity: 0 
+                    },
+                    { 
+                        transform: `translateY(-${50 + Math.random() * 40}px) translateX(${offsetX * 0.6}px) scale(1)`, 
+                        opacity: 0.95,
+                        offset: 0.35
+                    },
+                    { 
+                        transform: `translateY(${15 + Math.random() * 25}px) translateX(${offsetX * 0.9}px) scale(0.5)`, 
+                        opacity: 0.5,
+                        offset: 0.75
+                    },
+                    { 
+                        transform: `translateY(${45 + Math.random() * 25}px) translateX(${offsetX}px) scale(0.2)`, 
+                        opacity: 0 
+                    }
+                ], {
+                    duration: animDuration,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                });
+            }, duration * 1000 - 50 + i * 25);
+            
+            setTimeout(() => droplet.remove(), duration * 1000 + animDuration);
+        }
         
         setTimeout(() => {
             splashStart.remove();
