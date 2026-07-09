@@ -106,13 +106,6 @@ app.get('/storia', (req, res) => {
     });
 });
 
-app.get('/dashboard', (req, res) => {
-    res.render('dashboard', { 
-        titolo: 'Dashboard Petoi',
-        sottotitolo: 'Controlla il robot Petoi in tempo reale'
-    });
-});
-
 app.get('/remote', (req, res) => {
     res.render('remote');
 });
