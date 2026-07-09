@@ -111,8 +111,9 @@ app.get('/dashboard', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server avviato sulla porta ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server avviato su http://localhost:${PORT}`);
+    console.log(`Per accedere dal telefono, usa l'IP del computer sulla stessa rete WiFi`);
 });
 
 module.exports = { petoiEvents };
