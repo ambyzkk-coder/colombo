@@ -57,6 +57,16 @@
                     <img src="/indiani.jpg" alt="Accampamento indiani">
                     <div class="gallery-caption">Nativi americani - I popoli delle Americhe</div>
                     <button class="fullscreen-btn" onclick="openFullscreen(3)" title="Schermo intero">&#x26F6;</button>
+                    <div class="indian-music-overlay">
+                        <iframe id="indian-music" width="300" height="80" 
+                            src="" 
+                            data-src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
+                            title="Musica Nativi Americani" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
                 </div>
             </div>
             <button class="gallery-btn next" onclick="changeSlide(1)">&#10095;</button>
@@ -216,6 +226,28 @@
                 background: rgba(13, 32, 53, 0.95);
                 transform: scale(1.1);
             }
+            
+            .indian-music-overlay {
+                position: absolute;
+                bottom: 120px;
+                right: 20px;
+                z-index: 20;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.5s ease, transform 0.5s ease;
+                pointer-events: none;
+            }
+            
+            .indian-music-overlay.visible {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+            
+            .indian-music-overlay iframe {
+                border-radius: 12px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            }
         </style>
         
         <script>
@@ -245,6 +277,21 @@
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('active', index === currentSlide);
                 });
+                
+                // Gestione musica indiani
+                const musicOverlay = document.querySelector('.indian-music-overlay');
+                const musicIframe = document.getElementById('indian-music');
+                
+                if (musicOverlay && musicIframe) {
+                    if (currentSlide === 3) {
+                        musicOverlay.classList.add('visible');
+                        if (!musicIframe.src || musicIframe.src === '') {
+                            musicIframe.src = musicIframe.dataset.src;
+                        }
+                    } else {
+                        musicOverlay.classList.remove('visible');
+                    }
+                }
                 
                 if (scogliMessageTimeout) {
                     clearTimeout(scogliMessageTimeout);
@@ -361,6 +408,41 @@
                     justify-content: center;
                 `;
                 
+                // Clona il box comandi petoi per mostrarlo nel fullscreen
+                const petoiBox = document.getElementById('petoi-command-display');
+                let clonedPetoiBox = null;
+                if (petoiBox) {
+                    clonedPetoiBox = petoiBox.cloneNode(true);
+                    clonedPetoiBox.id = 'petoi-command-display-fullscreen';
+                    clonedPetoiBox.style.zIndex = '10002';
+                    clonedPetoiBox.style.display = 'block';
+                    clonedPetoiBox.classList.add('visible');
+                    overlay.appendChild(clonedPetoiBox);
+                }
+                
+                // Aggiungi musica per slide indiani
+                let fullscreenMusic = null;
+                if (currentIndex === 3) {
+                    fullscreenMusic = document.createElement('div');
+                    fullscreenMusic.style.cssText = `
+                        position: absolute;
+                        bottom: 150px;
+                        right: 30px;
+                        z-index: 10002;
+                    `;
+                    fullscreenMusic.innerHTML = `
+                        <iframe width="300" height="80" 
+                            src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
+                            title="Musica Nativi Americani" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            style="border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                        </iframe>
+                    `;
+                    overlay.appendChild(fullscreenMusic);
+                }
+                
                 const img = new Image();
                 img.src = images[currentIndex];
                 img.style.cssText = 'width: 100%; height: 100%; object-fit: cover;';
@@ -449,6 +531,8 @@
                 closeBtn.onclick = () => {
                     if (fullscreenMessage) fullscreenMessage.remove();
                     if (fullscreenMessageTimeout) clearTimeout(fullscreenMessageTimeout);
+                    if (clonedPetoiBox) clonedPetoiBox.remove();
+                    if (fullscreenMusic) fullscreenMusic.remove();
                     overlay.remove();
                 };
                 
@@ -476,6 +560,32 @@
                     currentIndex = (currentIndex - 1 + images.length) % images.length;
                     img.src = images[currentIndex];
                     showFullscreenMessage(currentIndex);
+                    
+                    // Gestisci musica
+                    if (fullscreenMusic) {
+                        fullscreenMusic.remove();
+                        fullscreenMusic = null;
+                    }
+                    if (currentIndex === 3) {
+                        fullscreenMusic = document.createElement('div');
+                        fullscreenMusic.style.cssText = `
+                            position: absolute;
+                            bottom: 150px;
+                            right: 30px;
+                            z-index: 10002;
+                        `;
+                        fullscreenMusic.innerHTML = `
+                            <iframe width="300" height="80" 
+                                src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
+                                title="Musica Nativi Americani" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                                style="border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                            </iframe>
+                        `;
+                        overlay.appendChild(fullscreenMusic);
+                    }
                 };
                 
                 const nextBtn = document.createElement('button');
@@ -502,6 +612,32 @@
                     currentIndex = (currentIndex + 1) % images.length;
                     img.src = images[currentIndex];
                     showFullscreenMessage(currentIndex);
+                    
+                    // Gestisci musica
+                    if (fullscreenMusic) {
+                        fullscreenMusic.remove();
+                        fullscreenMusic = null;
+                    }
+                    if (currentIndex === 3) {
+                        fullscreenMusic = document.createElement('div');
+                        fullscreenMusic.style.cssText = `
+                            position: absolute;
+                            bottom: 150px;
+                            right: 30px;
+                            z-index: 10002;
+                        `;
+                        fullscreenMusic.innerHTML = `
+                            <iframe width="300" height="80" 
+                                src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
+                                title="Musica Nativi Americani" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                                style="border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                            </iframe>
+                        `;
+                        overlay.appendChild(fullscreenMusic);
+                    }
                 };
                 
                 overlay.appendChild(img);
@@ -512,6 +648,8 @@
                     if (e.target === overlay) {
                         if (fullscreenMessage) fullscreenMessage.remove();
                         if (fullscreenMessageTimeout) clearTimeout(fullscreenMessageTimeout);
+                        if (clonedPetoiBox) clonedPetoiBox.remove();
+                        if (fullscreenMusic) fullscreenMusic.remove();
                         overlay.remove();
                     }
                 };
@@ -521,13 +659,67 @@
                         currentIndex = (currentIndex - 1 + images.length) % images.length;
                         img.src = images[currentIndex];
                         showFullscreenMessage(currentIndex);
+                        
+                        // Gestisci musica
+                        if (fullscreenMusic) {
+                            fullscreenMusic.remove();
+                            fullscreenMusic = null;
+                        }
+                        if (currentIndex === 3) {
+                            fullscreenMusic = document.createElement('div');
+                            fullscreenMusic.style.cssText = `
+                                position: absolute;
+                                bottom: 150px;
+                                right: 30px;
+                                z-index: 10002;
+                            `;
+                            fullscreenMusic.innerHTML = `
+                                <iframe width="300" height="80" 
+                                    src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
+                                    title="Musica Nativi Americani" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen
+                                    style="border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                                </iframe>
+                            `;
+                            overlay.appendChild(fullscreenMusic);
+                        }
                     } else if (e.key === 'ArrowRight') {
                         currentIndex = (currentIndex + 1) % images.length;
                         img.src = images[currentIndex];
                         showFullscreenMessage(currentIndex);
+                        
+                        // Gestisci musica
+                        if (fullscreenMusic) {
+                            fullscreenMusic.remove();
+                            fullscreenMusic = null;
+                        }
+                        if (currentIndex === 3) {
+                            fullscreenMusic = document.createElement('div');
+                            fullscreenMusic.style.cssText = `
+                                position: absolute;
+                                bottom: 150px;
+                                right: 30px;
+                                z-index: 10002;
+                            `;
+                            fullscreenMusic.innerHTML = `
+                                <iframe width="300" height="80" 
+                                    src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
+                                    title="Musica Nativi Americani" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen
+                                    style="border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                                </iframe>
+                            `;
+                            overlay.appendChild(fullscreenMusic);
+                        }
                     } else if (e.key === 'Escape') {
                         if (fullscreenMessage) fullscreenMessage.remove();
                         if (fullscreenMessageTimeout) clearTimeout(fullscreenMessageTimeout);
+                        if (clonedPetoiBox) clonedPetoiBox.remove();
+                        if (fullscreenMusic) fullscreenMusic.remove();
                         overlay.remove();
                         document.removeEventListener('keydown', handleKeydown);
                     }
@@ -608,7 +800,6 @@
     <script src="/js/rocks.js"></script>
     <script src="/js/sunset.js"></script>
     <script src="/js/ships.js"></script>
-    <script src="/js/wind.js"></script>
     <script src="/js/remote-control.js"></script>
 </body>
 </html>
