@@ -49,9 +49,14 @@
                     <button class="fullscreen-btn" onclick="openFullscreen(1)" title="Schermo intero">&#x26F6;</button>
                 </div>
                 <div class="gallery-slide">
+                    <img src="/terraa.webp" alt="Terra in vista">
+                    <div class="gallery-caption">Terra in vista - L'arrivo nel Nuovo Mondo</div>
+                    <button class="fullscreen-btn" onclick="openFullscreen(2)" title="Schermo intero">&#x26F6;</button>
+                </div>
+                <div class="gallery-slide">
                     <img src="/indiani.jpg" alt="Accampamento indiani">
                     <div class="gallery-caption">Nativi americani - I popoli delle Americhe</div>
-                    <button class="fullscreen-btn" onclick="openFullscreen(2)" title="Schermo intero">&#x26F6;</button>
+                    <button class="fullscreen-btn" onclick="openFullscreen(3)" title="Schermo intero">&#x26F6;</button>
                 </div>
             </div>
             <button class="gallery-btn next" onclick="changeSlide(1)">&#10095;</button>
@@ -61,6 +66,7 @@
             <span class="dot" onclick="goToSlide(0)"></span>
             <span class="dot" onclick="goToSlide(1)"></span>
             <span class="dot" onclick="goToSlide(2)"></span>
+            <span class="dot" onclick="goToSlide(3)"></span>
         </div>
         
         <style>
@@ -214,7 +220,7 @@
         
         <script>
             let currentSlide = 0;
-            const totalSlides = 3;
+            const totalSlides = 4;
             
             function changeSlide(n) {
                 currentSlide += n;
@@ -294,7 +300,7 @@
             }
             
             function openFullscreen(slideIndex) {
-                const images = ['/mappa3.jpg', '/scogli.jpg', '/indiani.jpg'];
+                const images = ['/mappa3.jpg', '/scogli.jpg', '/terraa.webp', '/indiani.jpg'];
                 let currentIndex = slideIndex;
                 
                 const overlay = document.createElement('div');
