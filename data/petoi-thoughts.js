@@ -1,52 +1,72 @@
-const fs = require('fs');
-const path = require('path');
+const { Pool } = require('pg');
 
-const thoughtsFile = path.join(__dirname, '..', 'data', 'petoi-thoughts.json');
-
-function initDatabase() {
-    const dataDir = path.join(__dirname, '..', 'data');
-    if (!fs.existsSync(dataDir)) {
-        fs.mkdirSync(dataDir, { recursive: true });
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
     }
-    
-    if (!fs.existsSync(thoughtsFile)) {
-        fs.writeFileSync(thoughtsFile, JSON.stringify([], null, 2));
+});
+
+async function initDatabase() {
+    try {
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS petoi_thoughts (
+                id SERIAL PRIMARY KEY,
+                thought TEXT NOT NULL,
+                emotion VARCHAR(50) DEFAULT 'neutro',
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+        console.log('Database PostgreSQL inizializzato correttamente');
+    } catch (error) {
+        console.error('Errore inizializzazione database:', error);
     }
 }
 
-function getAllThoughts() {
+initDatabase();
+
+async function getAllThoughts() {
     try {
-        const data = fs.readFileSync(thoughtsFile, 'utf8');
-        return JSON.parse(data);
+        const result = await pool.query('SELECT * FROM petoi_thoughts ORDER BY timestamp ASC');
+        return result.rows;
     } catch (error) {
+        console.error('Errore recupero pensieri:', error);
         return [];
     }
 }
 
-function getLatestThought() {
-    const thoughts = getAllThoughts();
-    return thoughts.length > 0 ? thoughts[thoughts.length - 1] : null;
+async function getLatestThought() {
+    try {
+        const result = await pool.query('SELECT * FROM petoi_thoughts ORDER BY timestamp DESC LIMIT 1');
+        return result.rows.length > 0 ? result.rows[0] : null;
+    } catch (error) {
+        console.error('Errore recupero ultimo pensiero:', error);
+        return null;
+    }
 }
 
-function addThought(thought, emotion = 'neutro') {
-    const thoughts = getAllThoughts();
-    const newThought = {
-        id: Date.now(),
-        thought: thought,
-        emotion: emotion,
-        timestamp: new Date().toISOString()
-    };
-    thoughts.push(newThought);
-    fs.writeFileSync(thoughtsFile, JSON.stringify(thoughts, null, 2));
-    return newThought;
+async function addThought(thought, emotion = 'neutro') {
+    try {
+        const result = await pool.query(
+            'INSERT INTO petoi_thoughts (thought, emotion) VALUES ($1, $2) RETURNING *',
+            [thought, emotion]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error('Errore aggiunta pensiero:', error);
+        throw error;
+    }
 }
 
-function clearThoughts() {
-    fs.writeFileSync(thoughtsFile, JSON.stringify([], null, 2));
-    return { success: true, message: 'Tutti i pensieri sono stati eliminati' };
+async function clearThoughts() {
+    try {
+        await pool.query('DELETE FROM petoi_thoughts');
+        return { success: true, message: 'Tutti i pensieri sono stati eliminati' };
+    } catch (error) {
+        console.error('Errore eliminazione pensieri:', error);
+        throw error;
+    }
 }
-
-initDatabase();
 
 module.exports = {
     getAllThoughts,
