@@ -101,6 +101,11 @@
                         </iframe>
                     </div>
                 </div>
+                <div class="gallery-slide">
+                    <img src="/petoiimg.jpg" alt="Petoi il robot esploratore">
+                    <div class="gallery-caption">Petoi - Il nostro compagno di viaggio</div>
+                    <button class="fullscreen-btn" onclick="openFullscreen(4)" title="Schermo intero">&#x26F6;</button>
+                </div>
             </div>
             <button class="gallery-btn next" onclick="changeSlide(1)">&#10095;</button>
         </div>
@@ -110,6 +115,7 @@
             <span class="dot" onclick="goToSlide(1)"></span>
             <span class="dot" onclick="goToSlide(2)"></span>
             <span class="dot" onclick="goToSlide(3)"></span>
+            <span class="dot" onclick="goToSlide(4)"></span>
         </div>
         
         <style>
@@ -335,7 +341,7 @@
         
         <script>
             let currentSlide = 0;
-            const totalSlides = 4;
+            const totalSlides = 5;
             
             function changeSlide(n) {
                 currentSlide += n;
@@ -514,7 +520,7 @@
             }
             
             function openFullscreen(slideIndex) {
-                const images = ['/mappa3.jpg', '/scogli.jpg', '/terraa.webp', '/indiani.jpg'];
+                const images = ['/mappa3.jpg', '/scogli.jpg', '/terraa.webp', '/indiani.jpg', '/petoiimg.jpg'];
                 let currentIndex = slideIndex;
                 let fullscreenMessage = null;
                 let fullscreenMessageTimeout = null;
