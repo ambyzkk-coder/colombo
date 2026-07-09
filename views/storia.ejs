@@ -228,6 +228,9 @@
                 updateGallery();
             }
             
+            let scogliMessageTimeout = null;
+            let scogliMessageElement = null;
+            
             function updateGallery() {
                 const slides = document.querySelector('.gallery-slides');
                 slides.style.transform = `translateX(-${currentSlide * 100}%)`;
@@ -236,6 +239,58 @@
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('active', index === currentSlide);
                 });
+                
+                if (scogliMessageTimeout) {
+                    clearTimeout(scogliMessageTimeout);
+                    scogliMessageTimeout = null;
+                }
+                
+                if (scogliMessageElement) {
+                    scogliMessageElement.remove();
+                    scogliMessageElement = null;
+                }
+                
+                if (currentSlide === 1) {
+                    scogliMessageElement = document.createElement('div');
+                    scogliMessageElement.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        color: white;
+                        font-size: 1.8em;
+                        font-weight: bold;
+                        text-align: center;
+                        padding: 30px 50px;
+                        z-index: 100;
+                        text-shadow: 
+                            -3px -3px 0 #000,
+                            3px -3px 0 #000,
+                            -3px 3px 0 #000,
+                            3px 3px 0 #000,
+                            -3px 0 0 #000,
+                            3px 0 0 #000,
+                            0 -3px 0 #000,
+                            0 3px 0 #000,
+                            0 0 8px rgba(0,0,0,0.8);
+                        animation: fadeInMessage 0.5s ease-out;
+                        pointer-events: none;
+                    `;
+                    scogliMessageElement.textContent = 'Oh no, gli scogli! Forse è meglio girare da questa parte per arrivare alle Indie';
+                    document.body.appendChild(scogliMessageElement);
+                    
+                    scogliMessageTimeout = setTimeout(() => {
+                        if (scogliMessageElement) {
+                            scogliMessageElement.style.animation = 'fadeOutMessage 0.5s ease-out';
+                            setTimeout(() => {
+                                if (scogliMessageElement) {
+                                    scogliMessageElement.remove();
+                                    scogliMessageElement = null;
+                                }
+                            }, 500);
+                        }
+                    }, 20000);
+                }
             }
             
             function openFullscreen(slideIndex) {
@@ -336,6 +391,14 @@
             @keyframes slideOut {
                 from { transform: translateX(0); opacity: 1; }
                 to { transform: translateX(400px); opacity: 0; }
+            }
+            @keyframes fadeInMessage {
+                from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+                to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            }
+            @keyframes fadeOutMessage {
+                from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                to { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
             }
         </style>
         <script src="/js/command-display.js"></script>
