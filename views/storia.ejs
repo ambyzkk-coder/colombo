@@ -552,6 +552,31 @@
                     overlay.appendChild(clonedPetoiBox);
                 }
                 
+                // Clona la finestra dei pensieri Petoi per il fullscreen
+                const thoughtBox = document.getElementById('petoi-thought');
+                let clonedThoughtBox = null;
+                if (thoughtBox) {
+                    clonedThoughtBox = thoughtBox.cloneNode(true);
+                    clonedThoughtBox.id = 'petoi-thought-fullscreen';
+                    clonedThoughtBox.style.cssText = `
+                        position: absolute;
+                        top: 80px;
+                        left: 20px;
+                        background: linear-gradient(135deg, rgba(13, 27, 42, 0.95), rgba(26, 74, 110, 0.9));
+                        color: white;
+                        padding: 15px 25px;
+                        border-radius: 12px;
+                        z-index: 10002;
+                        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+                        font-size: 1.1em;
+                        text-align: left;
+                        opacity: 1;
+                        pointer-events: none;
+                        max-width: 400px;
+                    `;
+                    overlay.appendChild(clonedThoughtBox);
+                }
+                
                 // Aggiungi musica per tutte le slide (nascosta, solo audio)
                 let fullscreenMusic = null;
                 if (currentIndex === 0) {
@@ -725,6 +750,7 @@
                     if (fullscreenMessage) fullscreenMessage.remove();
                     if (fullscreenMessageTimeout) clearTimeout(fullscreenMessageTimeout);
                     if (clonedPetoiBox) clonedPetoiBox.remove();
+                    if (clonedThoughtBox) clonedThoughtBox.remove();
                     if (fullscreenMusic) fullscreenMusic.remove();
                     overlay.remove();
                 };
@@ -964,6 +990,7 @@
                         if (fullscreenMessage) fullscreenMessage.remove();
                         if (fullscreenMessageTimeout) clearTimeout(fullscreenMessageTimeout);
                         if (clonedPetoiBox) clonedPetoiBox.remove();
+                        if (clonedThoughtBox) clonedThoughtBox.remove();
                         if (fullscreenMusic) fullscreenMusic.remove();
                         overlay.remove();
                     }
@@ -1148,6 +1175,7 @@
                         if (fullscreenMessage) fullscreenMessage.remove();
                         if (fullscreenMessageTimeout) clearTimeout(fullscreenMessageTimeout);
                         if (clonedPetoiBox) clonedPetoiBox.remove();
+                        if (clonedThoughtBox) clonedThoughtBox.remove();
                         if (fullscreenMusic) fullscreenMusic.remove();
                         overlay.remove();
                         document.removeEventListener('keydown', handleKeydown);
@@ -1227,6 +1255,15 @@
                     setTimeout(() => {
                         thoughtDiv.style.animation = '';
                     }, 500);
+                }
+                
+                // Aggiorna anche il box fullscreen se esiste
+                const fullscreenThoughtDiv = document.getElementById('petoi-thought-fullscreen');
+                if (fullscreenThoughtDiv) {
+                    const fullscreenThoughtText = fullscreenThoughtDiv.querySelector('#petoi-thought-text');
+                    if (fullscreenThoughtText) {
+                        fullscreenThoughtText.textContent = `"${thought}"`;
+                    }
                 }
             }
             
