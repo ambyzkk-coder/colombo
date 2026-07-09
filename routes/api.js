@@ -155,4 +155,47 @@ router.post('/petoi/vision/simulate/stop', (req, res) => {
     res.json(result);
 });
 
+router.post('/remote/navigate', (req, res) => {
+    const { page } = req.body;
+    
+    if (petoiEvents) {
+        petoiEvents.emit('remote-command', {
+            type: 'navigate',
+            page: page,
+            timestamp: new Date().toISOString()
+        });
+    }
+    
+    res.json({ success: true, message: `Comando navigazione inviato: ${page}` });
+});
+
+router.post('/remote/gallery', (req, res) => {
+    const { action } = req.body;
+    
+    if (petoiEvents) {
+        petoiEvents.emit('remote-command', {
+            type: 'gallery',
+            action: action,
+            timestamp: new Date().toISOString()
+        });
+    }
+    
+    res.json({ success: true, message: `Comando galleria inviato: ${action}` });
+});
+
+router.post('/remote/custom', (req, res) => {
+    const { command, data } = req.body;
+    
+    if (petoiEvents) {
+        petoiEvents.emit('remote-command', {
+            type: 'custom',
+            command: command,
+            data: data,
+            timestamp: new Date().toISOString()
+        });
+    }
+    
+    res.json({ success: true, message: `Comando personalizzato inviato: ${command}` });
+});
+
 module.exports = router;

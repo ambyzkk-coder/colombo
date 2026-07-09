@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controllo Remoto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a4a6e 0%, #0d1b2a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .section h2 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: #8ab4d4;
+        }
+        
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .btn {
+            background: rgba(26, 74, 110, 0.8);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+            background: rgba(13, 27, 42, 0.9);
+        }
+        
+        .btn-full {
+            grid-column: 1 / -1;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.2);
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .status.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 Controllo Remoto</h1>
+    
+    <div class="section">
+        <h2>📱 Navigazione Pagine</h2>
+        <div class="btn-grid">
+            <button class="btn" onclick="navigate('chi-siamo')">Chi Siamo</button>
+            <button class="btn" onclick="navigate('progetto')">Progetto</button>
+            <button class="btn" onclick="navigate('storia')">Storia</button>
+            <button class="btn" onclick="navigate('dashboard')">Dashboard</button>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>🖼️ Galleria Storica</h2>
+        <div class="btn-grid">
+            <button class="btn" onclick="galleryAction('prev')">◀ Precedente</button>
+            <button class="btn" onclick="galleryAction('next')">Successiva ▶</button>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>⚙️ Azioni Speciali</h2>
+        <div class="btn-grid">
+            <button class="btn" onclick="customCommand('scroll-top')">Scroll Su</button>
+            <button class="btn" onclick="customCommand('scroll-bottom')">Scroll Giù</button>
+            <button class="btn btn-full" onclick="customCommand('refresh')">🔄 Ricarica Pagina</button>
+        </div>
+    </div>
+    
+    <div id="status" class="status"></div>
+    
+    <script>
+        const baseUrl = window.location.origin;
+        
+        async function navigate(page) {
+            try {
+                const response = await fetch(`${baseUrl}/api/remote/navigate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ page })
+                });
+                const result = await response.json();
+                showStatus(`✅ Navigazione a: ${page}`);
+            } catch (error) {
+                showStatus('❌ Errore di connessione');
+            }
+        }
+        
+        async function galleryAction(action) {
+            try {
+                const response = await fetch(`${baseUrl}/api/remote/gallery`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action })
+                });
+                const result = await response.json();
+                showStatus(`✅ Galleria: ${action}`);
+            } catch (error) {
+                showStatus('❌ Errore di connessione');
+            }
+        }
+        
+        async function customCommand(command) {
+            try {
+                const response = await fetch(`${baseUrl}/api/remote/custom`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command })
+                });
+                const result = await response.json();
+                showStatus(`✅ Comando: ${command}`);
+            } catch (error) {
+                showStatus('❌ Errore di connessione');
+            }
+        }
+        
+        function showStatus(message) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.classList.add('show');
+            setTimeout(() => status.classList.remove('show'), 2000);
+        }
+    </script>
+</body>
+</html>

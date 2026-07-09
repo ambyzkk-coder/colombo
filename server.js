@@ -27,11 +27,13 @@ app.get('/events', (req, res) => {
     petoiEvents.on('object-detected', sendEvent);
     petoiEvents.on('gallery-next', sendEvent);
     petoiEvents.on('command-executed', sendEvent);
+    petoiEvents.on('remote-command', sendEvent);
     
     req.on('close', () => {
         petoiEvents.off('object-detected', sendEvent);
         petoiEvents.off('gallery-next', sendEvent);
         petoiEvents.off('command-executed', sendEvent);
+        petoiEvents.off('remote-command', sendEvent);
     });
 });
 
@@ -111,9 +113,14 @@ app.get('/dashboard', (req, res) => {
     });
 });
 
+app.get('/remote', (req, res) => {
+    res.render('remote');
+});
+
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server avviato su http://localhost:${PORT}`);
     console.log(`Per accedere dal telefono, usa l'IP del computer sulla stessa rete WiFi`);
+    console.log(`Pagina controllo remoto: http://<IP>:${PORT}/remote`);
 });
 
 module.exports = { petoiEvents };
