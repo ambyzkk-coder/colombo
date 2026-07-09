@@ -47,6 +47,16 @@
                     <img src="/scogli.jpg" alt="Scogli sul mare">
                     <div class="gallery-caption">Scogliere atlantiche - Le coste scoperte da Colombo</div>
                     <button class="fullscreen-btn" onclick="openFullscreen(1)" title="Schermo intero">&#x26F6;</button>
+                    <div class="scogli-music-overlay">
+                        <iframe id="scogli-music" width="1" height="1" 
+                            src="" 
+                            data-src="https://www.youtube.com/embed/Tjp8cj8Vzyo?autoplay=1" 
+                            title="Musica Mare" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
                 </div>
                 <div class="gallery-slide">
                     <img src="/terraa.webp" alt="Terra in vista">
@@ -244,6 +254,24 @@
                 width: 1px;
                 height: 1px;
             }
+            
+            .scogli-music-overlay {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                z-index: 20;
+                opacity: 0;
+                pointer-events: none;
+            }
+            
+            .scogli-music-overlay.visible {
+                opacity: 0;
+            }
+            
+            .scogli-music-overlay iframe {
+                width: 1px;
+                height: 1px;
+            }
         </style>
         
         <script>
@@ -274,14 +302,28 @@
                     dot.classList.toggle('active', index === currentSlide);
                 });
                 
-                // Gestione musica indiani
+                // Gestione musica
+                const scogliMusicOverlay = document.querySelector('.scogli-music-overlay');
+                const scogliMusicIframe = document.getElementById('scogli-music');
+                
+                if (scogliMusicOverlay && scogliMusicIframe) {
+                    if (currentSlide === 1) {
+                        scogliMusicOverlay.classList.add('visible');
+                        if (!scogliMusicIframe.src || scogliMusicIframe.src === '' || scogliMusicIframe.src === 'about:blank') {
+                            scogliMusicIframe.src = scogliMusicIframe.dataset.src;
+                        }
+                    } else {
+                        scogliMusicOverlay.classList.remove('visible');
+                    }
+                }
+                
                 const musicOverlay = document.querySelector('.indian-music-overlay');
                 const musicIframe = document.getElementById('indian-music');
                 
                 if (musicOverlay && musicIframe) {
                     if (currentSlide === 3) {
                         musicOverlay.classList.add('visible');
-                        if (!musicIframe.src || musicIframe.src === '') {
+                        if (!musicIframe.src || musicIframe.src === '' || musicIframe.src === 'about:blank') {
                             musicIframe.src = musicIframe.dataset.src;
                         }
                     } else {
@@ -416,6 +458,8 @@
                         left: 20px;
                         z-index: 10002;
                         display: block;
+                        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+                        border: 2px solid #333;
                     `;
                     clonedPetoiBox.classList.add('visible');
                     overlay.appendChild(clonedPetoiBox);
@@ -423,7 +467,28 @@
                 
                 // Aggiungi musica per slide indiani (nascosta, solo audio)
                 let fullscreenMusic = null;
-                if (currentIndex === 3) {
+                if (currentIndex === 1) {
+                    // Musica per scogli
+                    fullscreenMusic = document.createElement('div');
+                    fullscreenMusic.style.cssText = `
+                        position: absolute;
+                        width: 1px;
+                        height: 1px;
+                        opacity: 0;
+                        pointer-events: none;
+                    `;
+                    fullscreenMusic.innerHTML = `
+                        <iframe width="1" height="1" 
+                            src="https://www.youtube.com/embed/Tjp8cj8Vzyo?autoplay=1" 
+                            title="Musica Mare" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    `;
+                    overlay.appendChild(fullscreenMusic);
+                } else if (currentIndex === 3) {
+                    // Musica per indiani
                     fullscreenMusic = document.createElement('div');
                     fullscreenMusic.style.cssText = `
                         position: absolute;
@@ -567,7 +632,28 @@
                         fullscreenMusic.remove();
                         fullscreenMusic = null;
                     }
-                    if (currentIndex === 3) {
+                    if (currentIndex === 1) {
+                        // Musica per scogli
+                        fullscreenMusic = document.createElement('div');
+                        fullscreenMusic.style.cssText = `
+                            position: absolute;
+                            width: 1px;
+                            height: 1px;
+                            opacity: 0;
+                            pointer-events: none;
+                        `;
+                        fullscreenMusic.innerHTML = `
+                            <iframe width="1" height="1" 
+                                src="https://www.youtube.com/embed/Tjp8cj8Vzyo?autoplay=1" 
+                                title="Musica Mare" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        `;
+                        overlay.appendChild(fullscreenMusic);
+                    } else if (currentIndex === 3) {
+                        // Musica per indiani
                         fullscreenMusic = document.createElement('div');
                         fullscreenMusic.style.cssText = `
                             position: absolute;
@@ -619,7 +705,28 @@
                         fullscreenMusic.remove();
                         fullscreenMusic = null;
                     }
-                    if (currentIndex === 3) {
+                    if (currentIndex === 1) {
+                        // Musica per scogli
+                        fullscreenMusic = document.createElement('div');
+                        fullscreenMusic.style.cssText = `
+                            position: absolute;
+                            width: 1px;
+                            height: 1px;
+                            opacity: 0;
+                            pointer-events: none;
+                        `;
+                        fullscreenMusic.innerHTML = `
+                            <iframe width="1" height="1" 
+                                src="https://www.youtube.com/embed/Tjp8cj8Vzyo?autoplay=1" 
+                                title="Musica Mare" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        `;
+                        overlay.appendChild(fullscreenMusic);
+                    } else if (currentIndex === 3) {
+                        // Musica per indiani
                         fullscreenMusic = document.createElement('div');
                         fullscreenMusic.style.cssText = `
                             position: absolute;
