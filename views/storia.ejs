@@ -35,6 +35,10 @@
         <h2 style="color: #1a3a5c; text-align: center; margin: 40px 0 20px; font-weight: normal; text-transform: uppercase; letter-spacing: 2px;">Galleria Storica</h2>
         
         <div class="gallery-container">
+            <div id="petoi-thought" style="position: absolute; top: 80px; left: 20px; right: 20px; background: linear-gradient(135deg, rgba(13, 27, 42, 0.95), rgba(26, 74, 110, 0.9)); color: white; padding: 15px 25px; border-radius: 12px; z-index: 5; box-shadow: 0 5px 20px rgba(0,0,0,0.3); font-size: 1.1em; text-align: center; opacity: 0; transform: translateY(-20px); transition: all 0.5s ease; pointer-events: none; max-width: 600px; margin: 0 auto;">
+                <div style="font-size: 0.75em; opacity: 0.7; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">💭 Petoi pensa...</div>
+                <div id="petoi-thought-text" style="font-style: italic;">Caricamento pensieri...</div>
+            </div>
             <button class="gallery-btn prev" onclick="changeSlide(-1)">&#10094;</button>
             <div class="gallery-slides">
                 <div class="gallery-slide">
@@ -1178,6 +1182,39 @@
                 }, 3000);
             }
             
+            function loadLatestThought() {
+                fetch('/api/thoughts/latest')
+                    .then(res => res.json())
+                    .then(result => {
+                        if (result.success && result.data) {
+                            const thoughtDiv = document.getElementById('petoi-thought');
+                            const thoughtText = document.getElementById('petoi-thought-text');
+                            if (thoughtText && result.data.thought) {
+                                thoughtText.textContent = `"${result.data.thought}"`;
+                                thoughtDiv.style.opacity = '1';
+                                thoughtDiv.style.transform = 'translateY(0)';
+                            }
+                        }
+                    })
+                    .catch(err => console.log('Errore caricamento pensiero:', err));
+            }
+            
+            function updateThought(thought) {
+                const thoughtDiv = document.getElementById('petoi-thought');
+                const thoughtText = document.getElementById('petoi-thought-text');
+                if (thoughtText && thought) {
+                    thoughtText.textContent = `"${thought}"`;
+                    thoughtDiv.style.opacity = '1';
+                    thoughtDiv.style.transform = 'translateY(0)';
+                    thoughtDiv.style.animation = 'pulse 0.5s ease';
+                    setTimeout(() => {
+                        thoughtDiv.style.animation = '';
+                    }, 500);
+                }
+            }
+            
+            loadLatestThought();
+            
             const eventSource = new EventSource('/events');
             
             eventSource.onmessage = (event) => {
@@ -1190,6 +1227,10 @@
                 
                 if (data.type === 'object-detected') {
                     console.log(`Oggetto rilevato: ${data.object}`);
+                }
+                
+                if (data.type === 'new-thought' && data.thought) {
+                    updateThought(data.thought.thought);
                 }
             };
             
@@ -1215,6 +1256,10 @@
             @keyframes fadeOutMessage {
                 from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
                 to { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+            }
+            @keyframes pulse {
+                0%, 100% { transform: translateY(0) scale(1); }
+                50% { transform: translateY(-5px) scale(1.02); }
             }
         </style>
     </main>

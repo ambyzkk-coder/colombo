@@ -3,6 +3,7 @@ const router = express.Router();
 const petoiController = require('../petoi-controller');
 const siteData = require('../data/site-content');
 const { petoiEvents } = require('../server');
+const petoiThoughts = require('../data/petoi-thoughts');
 
 router.get('/info', (req, res) => {
     res.json({
@@ -196,6 +197,41 @@ router.post('/remote/custom', (req, res) => {
     }
     
     res.json({ success: true, message: `Comando personalizzato inviato: ${command}` });
+});
+
+router.get('/thoughts', (req, res) => {
+    const thoughts = petoiThoughts.getAllThoughts();
+    res.json({ success: true, data: thoughts });
+});
+
+router.get('/thoughts/latest', (req, res) => {
+    const thought = petoiThoughts.getLatestThought();
+    res.json({ success: true, data: thought });
+});
+
+router.post('/thoughts', (req, res) => {
+    const { thought, emotion } = req.body;
+    
+    if (!thought) {
+        return res.status(400).json({ success: false, error: 'Pensiero richiesto' });
+    }
+    
+    const newThought = petoiThoughts.addThought(thought, emotion || 'neutro');
+    
+    if (petoiEvents) {
+        petoiEvents.emit('petoi-thought', {
+            type: 'new-thought',
+            thought: newThought,
+            timestamp: new Date().toISOString()
+        });
+    }
+    
+    res.json({ success: true, data: newThought });
+});
+
+router.delete('/thoughts', (req, res) => {
+    const result = petoiThoughts.clearThoughts();
+    res.json(result);
 });
 
 module.exports = router;

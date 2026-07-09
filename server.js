@@ -28,12 +28,14 @@ app.get('/events', (req, res) => {
     petoiEvents.on('gallery-next', sendEvent);
     petoiEvents.on('command-executed', sendEvent);
     petoiEvents.on('remote-command', sendEvent);
+    petoiEvents.on('petoi-thought', sendEvent);
     
     req.on('close', () => {
         petoiEvents.off('object-detected', sendEvent);
         petoiEvents.off('gallery-next', sendEvent);
         petoiEvents.off('command-executed', sendEvent);
         petoiEvents.off('remote-command', sendEvent);
+        petoiEvents.off('petoi-thought', sendEvent);
     });
 });
 
