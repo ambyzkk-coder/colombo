@@ -508,6 +508,61 @@
                 overlay.appendChild(closeBtn);
                 overlay.appendChild(prevBtn);
                 overlay.appendChild(nextBtn);
+                
+                const petoiPanel = document.createElement('div');
+                petoiPanel.style.cssText = `
+                    position: absolute;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: linear-gradient(135deg, #1a3a5c 0%, #0d1b2a 100%);
+                    border-radius: 15px;
+                    padding: 20px;
+                    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+                    z-index: 10001;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    max-width: 90%;
+                    justify-content: center;
+                `;
+                
+                const petoiCommands = [
+                    { label: 'Cammina', action: 'cammina' },
+                    { label: 'Ferma', action: 'fermati' },
+                    { label: 'Siediti', action: 'siediti' },
+                    { label: 'Alzati', action: 'alzati' },
+                    { label: 'Saluta', action: 'saluta' }
+                ];
+                
+                petoiCommands.forEach(cmd => {
+                    const btn = document.createElement('button');
+                    btn.textContent = cmd.label;
+                    btn.style.cssText = `
+                        background: rgba(255,255,255,0.1);
+                        border: 2px solid rgba(255,255,255,0.3);
+                        color: white;
+                        padding: 10px 20px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 0.9em;
+                        transition: all 0.3s;
+                    `;
+                    btn.onmouseover = () => btn.style.background = 'rgba(255,255,255,0.2)';
+                    btn.onmouseout = () => btn.style.background = 'rgba(255,255,255,0.1)';
+                    btn.onclick = (e) => {
+                        e.stopPropagation();
+                        fetch('/api/petoi/action', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ action: cmd.action })
+                        });
+                    };
+                    petoiPanel.appendChild(btn);
+                });
+                
+                overlay.appendChild(petoiPanel);
+                
                 overlay.onclick = (e) => {
                     if (e.target === overlay) {
                         if (fullscreenMessage) fullscreenMessage.remove();
