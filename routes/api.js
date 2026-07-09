@@ -199,34 +199,46 @@ router.post('/remote/custom', (req, res) => {
     res.json({ success: true, message: `Comando personalizzato inviato: ${command}` });
 });
 
-router.get('/thoughts', (req, res) => {
-    const thoughts = petoiThoughts.getAllThoughts();
-    res.json({ success: true, data: thoughts });
+router.get('/thoughts', async (req, res) => {
+    try {
+        const thoughts = await petoiThoughts.getAllThoughts();
+        res.json({ success: true, data: thoughts });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
 });
 
-router.get('/thoughts/latest', (req, res) => {
-    const thought = petoiThoughts.getLatestThought();
-    res.json({ success: true, data: thought });
+router.get('/thoughts/latest', async (req, res) => {
+    try {
+        const thought = await petoiThoughts.getLatestThought();
+        res.json({ success: true, data: thought });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
 });
 
-router.post('/thoughts', (req, res) => {
+router.post('/thoughts', async (req, res) => {
     const { thought, emotion } = req.body;
     
     if (!thought) {
         return res.status(400).json({ success: false, error: 'Pensiero richiesto' });
     }
     
-    const newThought = petoiThoughts.addThought(thought, emotion || 'neutro');
-    
-    if (petoiEvents) {
-        petoiEvents.emit('petoi-thought', {
-            type: 'new-thought',
-            thought: newThought,
-            timestamp: new Date().toISOString()
-        });
+    try {
+        const newThought = await petoiThoughts.addThought(thought, emotion || 'neutro');
+        
+        if (petoiEvents) {
+            petoiEvents.emit('petoi-thought', {
+                type: 'new-thought',
+                thought: newThought,
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        res.json({ success: true, data: newThought });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
     }
-    
-    res.json({ success: true, data: newThought });
 });
 
 router.delete('/thoughts', (req, res) => {
