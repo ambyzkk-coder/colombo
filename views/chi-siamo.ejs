@@ -18,12 +18,30 @@
         <p class="subtitle"><%= sottotitolo %></p>
         <h2 style="color: #1a3a5c; text-align: center; margin: 40px 0 20px; font-weight: normal;">Il Nostro Team</h2>
         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 30px;">
-            <div style="background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px;">Sofia</div>
-            <div style="background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px;">Massimo</div>
-            <div style="background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px;">Aurora</div>
-            <div style="background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px;">Thomas</div>
-            <div style="background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px;">Ambra</div>
-            <div style="background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px;">Giacomo</div>
+            <div class="team-member" data-class="CW" style="position: relative; background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px; cursor: pointer; transition: all 0.3s;">
+                Sofia
+                <span class="team-class" style="position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%); background: #4a90d9; color: white; padding: 5px 15px; font-size: 0.75em; border-radius: 5px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s;">Cyberworld (CW)</span>
+            </div>
+            <div class="team-member" data-class="AI" style="position: relative; background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px; cursor: pointer; transition: all 0.3s;">
+                Massimo
+                <span class="team-class" style="position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%); background: #e74c3c; color: white; padding: 5px 15px; font-size: 0.75em; border-radius: 5px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s;">Intelligenza Artificiale (AI)</span>
+            </div>
+            <div class="team-member" data-class="AI" style="position: relative; background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px; cursor: pointer; transition: all 0.3s;">
+                Aurora
+                <span class="team-class" style="position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%); background: #e74c3c; color: white; padding: 5px 15px; font-size: 0.75em; border-radius: 5px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s;">Intelligenza Artificiale (AI)</span>
+            </div>
+            <div class="team-member" data-class="IOT" style="position: relative; background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px; cursor: pointer; transition: all 0.3s;">
+                Thomas
+                <span class="team-class" style="position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%); background: #27ae60; color: white; padding: 5px 15px; font-size: 0.75em; border-radius: 5px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s;">Internet of Things (IOT)</span>
+            </div>
+            <div class="team-member" data-class="CW" style="position: relative; background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px; cursor: pointer; transition: all 0.3s;">
+                Ambra
+                <span class="team-class" style="position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%); background: #4a90d9; color: white; padding: 5px 15px; font-size: 0.75em; border-radius: 5px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s;">Cyberworld (CW)</span>
+            </div>
+            <div class="team-member" data-class="IOT" style="position: relative; background: #0d1b2a; color: white; padding: 15px 30px; font-size: 1.1em; letter-spacing: 1px; cursor: pointer; transition: all 0.3s;">
+                Giacomo
+                <span class="team-class" style="position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%); background: #27ae60; color: white; padding: 5px 15px; font-size: 0.75em; border-radius: 5px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s;">Internet of Things (IOT)</span>
+            </div>
         </div>
         <div class="content">
             <p>Siamo studenti che hanno partecipato a una summer school per la passione dell'informatica e del nuovo mondo che sta arrivando. Durante questo percorso formativo abbiamo avuto l'opportunità di approfondire le tecnologie più innovative e di confrontarci con esperti del settore.</p>
@@ -37,5 +55,20 @@
     <script src="/js/rocks.js"></script>
     <script src="/js/ships.js"></script>
     <script src="/js/remote-control.js"></script>
+    <script>
+        document.querySelectorAll('.team-member').forEach(member => {
+            member.addEventListener('mouseenter', function() {
+                this.querySelector('.team-class').style.opacity = '1';
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 5px 20px rgba(0,0,0,0.3)';
+            });
+            
+            member.addEventListener('mouseleave', function() {
+                this.querySelector('.team-class').style.opacity = '0';
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
