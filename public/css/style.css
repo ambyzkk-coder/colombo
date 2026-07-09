@@ -115,7 +115,7 @@ h1 {
 }
 
 .content {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 1);
     padding: 40px;
     border: 1px solid #1a4a6e;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
