@@ -229,24 +229,20 @@
             
             .indian-music-overlay {
                 position: absolute;
-                bottom: 120px;
-                right: 20px;
+                width: 1px;
+                height: 1px;
                 z-index: 20;
                 opacity: 0;
-                transform: translateY(20px);
-                transition: opacity 0.5s ease, transform 0.5s ease;
                 pointer-events: none;
             }
             
             .indian-music-overlay.visible {
-                opacity: 1;
-                transform: translateY(0);
-                pointer-events: auto;
+                opacity: 0;
             }
             
             .indian-music-overlay iframe {
-                border-radius: 12px;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+                width: 1px;
+                height: 1px;
             }
         </style>
         
@@ -414,30 +410,35 @@
                 if (petoiBox) {
                     clonedPetoiBox = petoiBox.cloneNode(true);
                     clonedPetoiBox.id = 'petoi-command-display-fullscreen';
-                    clonedPetoiBox.style.zIndex = '10002';
-                    clonedPetoiBox.style.display = 'block';
+                    clonedPetoiBox.style.cssText = `
+                        position: fixed;
+                        top: 70px;
+                        left: 20px;
+                        z-index: 10002;
+                        display: block;
+                    `;
                     clonedPetoiBox.classList.add('visible');
                     overlay.appendChild(clonedPetoiBox);
                 }
                 
-                // Aggiungi musica per slide indiani
+                // Aggiungi musica per slide indiani (nascosta, solo audio)
                 let fullscreenMusic = null;
                 if (currentIndex === 3) {
                     fullscreenMusic = document.createElement('div');
                     fullscreenMusic.style.cssText = `
                         position: absolute;
-                        bottom: 150px;
-                        right: 30px;
-                        z-index: 10002;
+                        width: 1px;
+                        height: 1px;
+                        opacity: 0;
+                        pointer-events: none;
                     `;
                     fullscreenMusic.innerHTML = `
-                        <iframe width="300" height="80" 
+                        <iframe width="1" height="1" 
                             src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
                             title="Musica Nativi Americani" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen
-                            style="border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                            allowfullscreen>
                         </iframe>
                     `;
                     overlay.appendChild(fullscreenMusic);
@@ -570,18 +571,18 @@
                         fullscreenMusic = document.createElement('div');
                         fullscreenMusic.style.cssText = `
                             position: absolute;
-                            bottom: 150px;
-                            right: 30px;
-                            z-index: 10002;
+                            width: 1px;
+                            height: 1px;
+                            opacity: 0;
+                            pointer-events: none;
                         `;
                         fullscreenMusic.innerHTML = `
-                            <iframe width="300" height="80" 
+                            <iframe width="1" height="1" 
                                 src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
                                 title="Musica Nativi Americani" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                style="border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                                allowfullscreen>
                             </iframe>
                         `;
                         overlay.appendChild(fullscreenMusic);
@@ -622,18 +623,18 @@
                         fullscreenMusic = document.createElement('div');
                         fullscreenMusic.style.cssText = `
                             position: absolute;
-                            bottom: 150px;
-                            right: 30px;
-                            z-index: 10002;
+                            width: 1px;
+                            height: 1px;
+                            opacity: 0;
+                            pointer-events: none;
                         `;
                         fullscreenMusic.innerHTML = `
-                            <iframe width="300" height="80" 
+                            <iframe width="1" height="1" 
                                 src="https://www.youtube.com/embed/RQhODxdBB60?start=125&autoplay=1" 
                                 title="Musica Nativi Americani" 
                                 frameborder="0" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                style="border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                                allowfullscreen>
                             </iframe>
                         `;
                         overlay.appendChild(fullscreenMusic);
