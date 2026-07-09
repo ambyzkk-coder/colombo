@@ -297,6 +297,48 @@
                         }
                     }, 5000);
                 }
+                
+                if (currentSlide === 2) {
+                    scogliMessageElement = document.createElement('div');
+                    scogliMessageElement.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        color: white;
+                        font-size: 2.5em;
+                        font-weight: bold;
+                        text-align: center;
+                        padding: 30px 50px;
+                        z-index: 100;
+                        text-shadow: 
+                            -3px -3px 0 #000,
+                            3px -3px 0 #000,
+                            -3px 3px 0 #000,
+                            3px 3px 0 #000,
+                            -3px 0 0 #000,
+                            3px 0 0 #000,
+                            0 -3px 0 #000,
+                            0 3px 0 #000,
+                            0 0 8px rgba(0,0,0,0.8);
+                        animation: fadeInMessage 0.5s ease-out;
+                        pointer-events: none;
+                    `;
+                    scogliMessageElement.textContent = 'Terra! Terra in vista!';
+                    document.body.appendChild(scogliMessageElement);
+                    
+                    scogliMessageTimeout = setTimeout(() => {
+                        if (scogliMessageElement) {
+                            scogliMessageElement.style.animation = 'fadeOutMessage 0.5s ease-out';
+                            setTimeout(() => {
+                                if (scogliMessageElement) {
+                                    scogliMessageElement.remove();
+                                    scogliMessageElement = null;
+                                }
+                            }, 500);
+                        }
+                    }, 5000);
+                }
             }
             
             function openFullscreen(slideIndex) {
