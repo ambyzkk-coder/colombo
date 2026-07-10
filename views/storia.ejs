@@ -102,14 +102,9 @@
                     </div>
                 </div>
                 <div class="gallery-slide">
-                    <img src="/petoiimg.jpg" alt="Petoi il robot esploratore">
-                    <div class="gallery-caption">Petoi - Il nostro compagno di viaggio</div>
-                    <button class="fullscreen-btn" onclick="openFullscreen(4)" title="Schermo intero">&#x26F6;</button>
-                </div>
-                <div class="gallery-slide">
                     <img src="/petoic.jpg" alt="Petoi e il team">
                     <div class="gallery-caption">Petoi e il team - Insieme verso nuove scoperte</div>
-                    <button class="fullscreen-btn" onclick="openFullscreen(5)" title="Schermo intero">&#x26F6;</button>
+                    <button class="fullscreen-btn" onclick="openFullscreen(4)" title="Schermo intero">&#x26F6;</button>
                     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; text-align: center; width: 90%;">
                         <div style="color: white; font-size: 2.5em; font-weight: bold; text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000, -3px 0 0 #000, 3px 0 0 #000, 0 -3px 0 #000, 0 3px 0 #000; margin-bottom: 30px; line-height: 1.3;">
                             La storia ci insegna che i confini esistono solo finché qualcuno ha il coraggio di superarli.
@@ -129,7 +124,6 @@
             <span class="dot" onclick="goToSlide(2)"></span>
             <span class="dot" onclick="goToSlide(3)"></span>
             <span class="dot" onclick="goToSlide(4)"></span>
-            <span class="dot" onclick="goToSlide(5)"></span>
         </div>
         
         <style>
@@ -355,7 +349,7 @@
         
         <script>
             let currentSlide = 0;
-            const totalSlides = 6;
+            const totalSlides = 5;
             
             function changeSlide(n) {
                 currentSlide += n;
@@ -534,7 +528,7 @@
             }
             
             function openFullscreen(slideIndex) {
-                const images = ['/mappa3.jpg', '/scogli.jpg', '/terraa.webp', '/indiani.jpg', '/petoiimg.jpg', '/petoic.jpg'];
+                const images = ['/mappa3.jpg', '/scogli.jpg', '/terraa.webp', '/indiani.jpg', '/petoic.jpg'];
                 let currentIndex = slideIndex;
                 let fullscreenMessage = null;
                 let fullscreenMessageTimeout = null;

@@ -9,6 +9,7 @@ const petoiEvents = new EventEmitter();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const apiRoutes = require('./routes/api');
 app.use('/api', apiRoutes);
